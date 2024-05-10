@@ -7,7 +7,7 @@
         <input type="text" name="title" placeholder="Title" class="form-control"/>
     </div>
     <div class="mb-3">
-        <textarea name="summary" placeholder="Summary" class="form-control"></textarea>
+        <textarea name="content" placeholder="Content" class="form-control"></textarea>
     </div>
     <div class="mb-3">
         <select class="form-select">

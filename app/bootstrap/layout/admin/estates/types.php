@@ -1,3 +1,6 @@
+<div class="breadcrumbs">
+    <a href="/estates/">Estates</a> > <span>Types</span>
+</div>
 <h1>Types</h1>
 <table class="table">
     <thead>
