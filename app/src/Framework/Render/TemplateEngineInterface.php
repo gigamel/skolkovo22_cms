@@ -30,19 +30,10 @@ interface TemplateEngineInterface
     
     /**
      * @param string $cssFile
-     * @param array $tagAttributes
      *
      * @return void
      */
-    public function includeCSSFromFile(string $cssFile, array $tagAttributes = []): void;
-    
-    /**
-     * @param string $jsFile
-     * @param array $tagAttributes
-     *
-     * @return void
-     */
-    public function includeJsFromFile(string $jsFile, array $tagAttributes = []): void;
+    public function includeCSSCodeFromFile(string $cssFile): void;
     
     /**
      * @param string $jsFile

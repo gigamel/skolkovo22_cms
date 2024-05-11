@@ -9,7 +9,7 @@ use App\Framework\Http\Protocol\ServerMessageInterface;
 class Response implements ServerMessageInterface
 {
     /** @var string[] */
-    protected $headers;
+    protected $headers = [];
     
     /**
      * @param string $body

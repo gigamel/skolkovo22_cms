@@ -7,17 +7,22 @@ namespace App\Framework\Http\Routing;
 interface RouteInterface
 {
     /**
-     * @return string[]
-     */
-    public function getMethods(): array;
-    
-    /**
      * @return string
      */
     public function getRule(): string;
-    
+
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAction(): mixed;
+    public function getController(): string;
+
+    /**
+     * @return string
+     */
+    public function getAction(): string;
+
+    /**
+     * @return string[]
+     */
+    public function getMethods(): array;
 }

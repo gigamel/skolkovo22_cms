@@ -61,14 +61,20 @@ class Router implements RouterInterface
     /**
      * @param string $name
      * @param string $rule
-     * @param mixed $action
+     * @param string $controller
+     * @param string $action
      * @param string[] $methods
      *
      * @return void
      */
-    public function route(string $name, string $rule, mixed $action, array $methods = ClientMessageInterface::HTTP_METHODS): void
-    {
-        $this->_collection[$name] = new Route($rule, $action, $methods);
+    public function route(
+        string $name,
+        string $rule,
+        string $controller,
+        string $action,
+        array $methods = ClientMessageInterface::HTTP_METHODS
+    ): void {
+        $this->_collection[$name] = new Route($rule, $controller, $action, $methods);
     }
 
     /**

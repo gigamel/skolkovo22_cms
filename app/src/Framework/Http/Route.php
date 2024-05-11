@@ -14,14 +14,16 @@ class Route implements RouteInterface
 
     /**
      * @param string $rule
-     * @param mixed $action
+     * @param string $controller
+     * @param string $action
      * @param string[] $methods
      *
      * @throws InvalidHttpMethodException
      */
     public function __construct(
         protected string $rule,
-        protected mixed $action,
+        protected string $controller,
+        protected string $action,
         array $methods = [ClientMessageInterface::METHOD_GET]
     ) {
         $this->setMethods($methods);
@@ -30,17 +32,25 @@ class Route implements RouteInterface
     /**
      * @inheritDoc
      */
-    public function getAction(): mixed
+    public function getRule(): string
     {
-        return $this->action;
+        return $this->rule;
     }
 
     /**
      * @inheritDoc
      */
-    public function getRule(): string
+    public function getController(): string
     {
-        return $this->rule;
+        return $this->controller;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAction(): string
+    {
+        return $this->action;
     }
 
     /**

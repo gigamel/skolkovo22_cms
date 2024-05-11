@@ -21,12 +21,19 @@ interface RouterInterface
     /**
      * @param string $name
      * @param string $rule
-     * @param callable $action
+     * @param string $controller
+     * @param string $action
      * @param string[] $methods
      *
      * @return void
      */
-    public function route(string $name, string $rule, callable $action, array $methods = ClientMessageInterface::HTTP_METHODS): void;
+    public function route(
+        string $name,
+        string $rule,
+        string $controller,
+        string $action,
+        array $methods = ClientMessageInterface::HTTP_METHODS
+    ): void;
     
     /**
      * @param ClientMessageInterface $request
