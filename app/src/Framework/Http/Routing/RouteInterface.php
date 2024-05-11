@@ -17,7 +17,7 @@ interface RouteInterface
     public function getRule(): string;
     
     /**
-     * @return callable
+     * @return mixed
      */
-    public function getAction(): callable;
+    public function getAction(): mixed;
 }

@@ -43,7 +43,7 @@ interface ServerMessageInterface
     /**
      * @return int
      */
-    public function getStatusCode(): int
+    public function getStatusCode(): int;
     
     /**
      * @return void
