@@ -11,7 +11,7 @@ if (!$e instanceof \Throwable) {
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Page Throwable</title>
+        <title>Page Not Found</title>
         <meta charset="UTF-8"/>
         <style>
             * {
@@ -33,28 +33,12 @@ if (!$e instanceof \Throwable) {
             .content {
                 padding: 15px;
             }
-            p {
-                padding: 15px 0;
-            }
         </style>
     </head>
     <body>
-        <h1>Oops!</h1>
+        <h1>Page Not Found</h1>
         <div class="content">
-
-            <p>
-                <strong>Type:</strong>
-                <?= get_class($e); ?>
-            </p>
-            <p>
-                <strong>File:</strong>
-                <?= sprintf('%s:%d', $e->getFile(), $e->getLine()); ?>
-            </p>
-            <p>
-                <strong>Message:</strong>
-                <?= $e->getMessage(); ?>
-            </p>
-            <pre><?php var_dump($e->getTrace()); ?></pre>
+            <p><?= $e->getMessage(); ?></p>
         </div>
     </body>
 </html>
