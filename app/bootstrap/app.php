@@ -10,7 +10,6 @@ Directory::setup(getcwd());
 if (0 === strpos(Url::path(), '/admin/')) {
     Url::setUpWebRoot('/admin');
     (new AdminApplication())->run();
-    //require_once __DIR__ . '/theme/layout.php';
 } else {
     (new CMSApplication())->run();
 }
