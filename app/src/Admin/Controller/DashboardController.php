@@ -7,7 +7,6 @@ namespace App\Admin\Controller;
 use App\Admin\Common\AbstractController;
 use App\Framework\Http\Protocol\ClientMessageInterface;
 use App\Framework\Http\Protocol\ServerMessageInterface;
-use App\Framework\Http\Response;
 
 class DashboardController extends AbstractController
 {
@@ -18,6 +17,16 @@ class DashboardController extends AbstractController
      */
     public function dashboard(ClientMessageInterface $request): ServerMessageInterface
     {
-        return new Response('DASHBOARD');
+        return $this->render('dashboard/dashboard.php');
+    }
+
+    /**
+     * @param ClientMessageInterface $request
+     *
+     * @return ServerMessageInterface
+     */
+    public function settings(ClientMessageInterface $request): ServerMessageInterface
+    {
+        return $this->render('dashboard/settings.php');
     }
 }

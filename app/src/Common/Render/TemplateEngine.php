@@ -15,6 +15,25 @@ class TemplateEngine implements TemplateEngineInterface
     protected $title = '';
     
     /**
+     * @param string $themePath
+     */
+    public function __construct(protected string $themePath)
+    {
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return void
+     */
+    public function includeTheme(string $name): void
+    {
+        if (file_exists($this->themePath . '/' . $name . '/theme.php')) {
+            require_once($this->themePath . '/' . $name . '/theme.php');
+        }
+    }
+
+    /**
      * @return string
      */
     public function getContent(): string

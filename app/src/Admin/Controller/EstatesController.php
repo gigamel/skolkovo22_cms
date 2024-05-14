@@ -9,7 +9,7 @@ use App\Framework\Http\Protocol\ClientMessageInterface;
 use App\Framework\Http\Protocol\ServerMessageInterface;
 use App\Framework\Http\Response;
 
-class PagesController extends AbstractController
+class EstatesController extends AbstractController
 {
     /**
      * @param ClientMessageInterface $request
@@ -18,7 +18,7 @@ class PagesController extends AbstractController
      */
     public function list(ClientMessageInterface $request): ServerMessageInterface
     {
-        return $this->render('pages/list.php');
+        return $this->render('estates/list.php');
     }
     
     /**
@@ -28,7 +28,7 @@ class PagesController extends AbstractController
      */
     public function add(ClientMessageInterface $request): ServerMessageInterface
     {
-        return $this->render('pages/form.php');
+        return $this->render('estates/form.php');
     }
     
     /**
@@ -38,7 +38,7 @@ class PagesController extends AbstractController
      */
     public function delete(ClientMessageInterface $request): ServerMessageInterface
     {
-        return $this->render('pages/delete.php');
+        return $this->render('estates/delete.php');
     }
     
     /**
@@ -48,6 +48,6 @@ class PagesController extends AbstractController
      */
     public function show(ClientMessageInterface $request): ServerMessageInterface
     {
-        return $this->render('pages/form.php');
+        return $this->render('estates/form.php');
     }
 }

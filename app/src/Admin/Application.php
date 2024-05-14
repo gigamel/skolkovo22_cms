@@ -6,6 +6,7 @@ namespace App\Admin;
 
 use App\Common\Base\Directory;
 use App\Common\Http\ExceptionHandler;
+use App\Common\Render\TemplateEngine;
 use App\Framework\Http\Request;
 use App\Framework\Http\Routing\RouterInterface;
 use Throwable;
@@ -35,14 +36,16 @@ class Application
         
         $request = new Request();
         $route = $router->handle($request);
-        
+
         $controllerName = $route->getController();
         $controller = new $controllerName();
         
         $response = $controller->{$route->getAction()}($request);
         $response->send();
         
-        echo $response->getBody();
+        $templateEngine = new TemplateEngine(Directory::theme());
+        $templateEngine->setContent($response->getBody());
+        $templateEngine->includeTheme('admin');
     }
     
     /**
@@ -52,13 +55,14 @@ class Application
      */
     protected function processThrowable(Throwable $e): void
     {
-        $response = (new ExceptionHandler())->handle($e);
-        $response->send();
-
-        echo $response->getBody();
-
-        //echo sprintf('<pre style="padding:15px;background-color:purple;color:#eee;">%s [%s]</pre>', $e->getMessage(), get_class($e));
-        //echo sprintf('<pre style="padding:15px;background-color:#eee;border:1px solid purple;">%s</pre>', $e->getTraceAsString());
+        if ($e instanceof \Exception) {
+            $response = (new ExceptionHandler())->handle($e);
+            $response->send();
+            echo $response->getBody();
+        } else {
+            echo sprintf('<pre style="padding:15px;background-color:purple;color:#eee;">%s [%s]</pre>', $e->getMessage(), get_class($e));
+            echo sprintf('<pre style="padding:15px;background-color:#eee;border:1px solid purple;">%s</pre>', $e->getTraceAsString());
+        }
     }
     
     /**

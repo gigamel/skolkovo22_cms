@@ -11,7 +11,7 @@
             crossorigin="anonymous"
         />
         
-        <?php $this->includeCSSFromFile(__DIR__ . '/assets/main.css'); ?>
+        <?php $this->includeCSSCodeFromFile(__DIR__ . '/assets/main.css'); ?>
     </head>
     <body>
         <header>
@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-md-9">
                         <a href="/admin/settings/">Settings</a>
-                        <a href="/admin/users/">Users</a>
+                        <a href="/admin/users/page/1">Users</a>
                         <a href="/admin/#">Go to public</a>
                     </div>
                 <div class="col-md-1">
@@ -39,27 +39,27 @@
                     <div class="col-md-2">
                         <ul>
                             <li>
-                                <a href="/admin/pages/">Pages</a>
+                                <a href="/admin/pages/page/1">Pages</a>
                                 <ul>
                                     <li><a href="/admin/pages/add/">Add</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/admin/estates/">Estates</a>
+                                <a href="/admin/estates/page/1">Estates</a>
                                 <ul>
                                     <li><a href="/admin/estates/add/">Add</a></li>
-                                    <li><a href="/admin/estates/types/">Types</a></li>
+                                    <li>
+                                        <a href="/admin/estates/categories/page/1">Categories</a>
+                                        <ul>
+                                            <li><a href="/admin/estates/category/add/">Add</a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-7">
-                        <?php if (file_exists($layout)): ?>
-                            <?php require_once $layout; ?>
-                        <?php else: ?>
-                            <h1>Page Not Found</h1>
-                            <p>Unknown resource</p>
-                        <?php endif; ?>
+                        <?= $this->getContent(); ?>
                     </div>
                 <div class="col-md-3">
                     <div class="documentation">

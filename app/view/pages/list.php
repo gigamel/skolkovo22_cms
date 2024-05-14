@@ -1,4 +1,4 @@
-<h1>Estates</h1>
+<h1>Pages</h1>
 <table class="table">
     <thead>
         <tr>
@@ -11,20 +11,20 @@
     <tbody>
         <tr>
             <th scope="row">1</th>
-            <td>Cottage number One</td>
-            <td>Let'go to this cottage</td>
+            <td>Home page</td>
+            <td>Welcome to pages</td>
             <td>
-                <a href="#" class="btn btn-primary">edit</a>
-                <a href="#" class="btn btn-primary">delete</a>
+                <a href="/admin/pages/edit/1" class="btn btn-primary">edit</a>
+                <a href="/admin/pages/delete/1" class="btn btn-primary">delete</a>
             </td>
         </tr>
         <tr>
             <th scope="row">2</th>
-            <td>House arround the river</td>
-            <td>This is very nice idea for spend your time</td>
+            <td>Estates</td>
+            <td>Our estates catalog</td>
             <td>
-                <a href="#" class="btn btn-primary">edit</a>
-                <a href="#" class="btn btn-primary">delete</a>
+                <a href="/admin/pages/edit/2" class="btn btn-primary">edit</a>
+                <a href="/admin/pages/delete/2" class="btn btn-primary">delete</a>
             </td>
         </tr>
     </tbody>

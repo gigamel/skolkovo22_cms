@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
-    <a href="/estates/">Estates</a> > <span>New</span>
+    <a href="/admin/estates/page/1">Estates</a> > <span>Form</span>
 </div>
-<h1>New Estate</h1>
+<h1>Estate</h1>
 <form method="POST" action="">
     <div class="mb-3">
         <input type="text" name="title" placeholder="Title" class="form-control"/>

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Admin\Controller\Estate;
+namespace App\Admin\Controller;
 
 use App\Admin\Common\AbstractController;
 use App\Framework\Http\Protocol\ClientMessageInterface;
@@ -18,7 +18,7 @@ class CategoriesController extends AbstractController
      */
     public function list(ClientMessageInterface $request): ServerMessageInterface
     {
-        return new Response('LIST');
+        return $this->render('estates/category/list.php');
     }
     
     /**
@@ -28,7 +28,7 @@ class CategoriesController extends AbstractController
      */
     public function add(ClientMessageInterface $request): ServerMessageInterface
     {
-        return new Response('ADD');
+        return $this->render('estates/category/form.php');
     }
     
     /**
@@ -38,7 +38,7 @@ class CategoriesController extends AbstractController
      */
     public function delete(ClientMessageInterface $request): ServerMessageInterface
     {
-        return new Response('DELETE');
+        return $this->render('estates/category/delete.php');
     }
     
     /**
@@ -48,6 +48,6 @@ class CategoriesController extends AbstractController
      */
     public function show(ClientMessageInterface $request): ServerMessageInterface
     {
-        return new Response('SHOW');
+        return $this->render('estates/category/form.php');
     }
 }

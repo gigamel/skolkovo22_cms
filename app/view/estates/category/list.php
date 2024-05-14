@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
-    <a href="/estates/">Estates</a> > <span>Types</span>
+    <a href="/admin/estates/page/1">Estates</a> > <span>Categories</span>
 </div>
-<h1>Types</h1>
+<h1>Categories</h1>
 <table class="table">
     <thead>
         <tr>
@@ -17,8 +17,8 @@
             <td>Cottage</td>
             <td>cottage</td>
             <td>
-                <a href="#" class="btn btn-primary">edit</a>
-                <a href="#" class="btn btn-primary">delete</a>
+                <a href="/admin/estates/category/edit/1" class="btn btn-primary">edit</a>
+                <a href="/admin/estates/category/delete/1" class="btn btn-primary">delete</a>
             </td>
         </tr>
         <tr>
@@ -26,8 +26,8 @@
             <td>House</td>
             <td>house</td>
             <td>
-                <a href="#" class="btn btn-primary">edit</a>
-                <a href="#" class="btn btn-primary">delete</a>
+                <a href="/admin/estates/category/edit/2" class="btn btn-primary">edit</a>
+                <a href="/admin/estates/category/delete/2" class="btn btn-primary">delete</a>
             </td>
         </tr>
     </tbody>

@@ -18,7 +18,7 @@ class AuthorizationController extends AbstractController
      */
     public function login(ClientMessageInterface $request): ServerMessageInterface
     {
-        return new Response('LOGIN');
+        return $this->render('authorization/login.php');
     }
     
     /**
@@ -28,6 +28,6 @@ class AuthorizationController extends AbstractController
      */
     public function logout(ClientMessageInterface $request): ServerMessageInterface
     {
-        return new Response('LOGOUT');
+        return $this->render('authorization/logout.php');
     }
 }

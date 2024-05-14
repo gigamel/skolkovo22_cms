@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Admin\Controller\Estate;
+namespace App\Admin\Controller;
 
 use App\Admin\Common\AbstractController;
 use App\Framework\Http\Protocol\ClientMessageInterface;
 use App\Framework\Http\Protocol\ServerMessageInterface;
-use App\Framework\Http\Response;
 
-class EstatesController extends AbstractController
+class UsersController extends AbstractController
 {
     /**
      * @param ClientMessageInterface $request
@@ -18,27 +17,7 @@ class EstatesController extends AbstractController
      */
     public function list(ClientMessageInterface $request): ServerMessageInterface
     {
-        return new Response('LIST');
-    }
-    
-    /**
-     * @param ClientMessageInterface $request
-     *
-     * @return ServerMessageInterface
-     */
-    public function add(ClientMessageInterface $request): ServerMessageInterface
-    {
-        return new Response('ADD');
-    }
-    
-    /**
-     * @param ClientMessageInterface $request
-     *
-     * @return ServerMessageInterface
-     */
-    public function delete(ClientMessageInterface $request): ServerMessageInterface
-    {
-        return new Response('DELETE');
+        return $this->render('users/list.php');
     }
     
     /**
@@ -48,6 +27,26 @@ class EstatesController extends AbstractController
      */
     public function show(ClientMessageInterface $request): ServerMessageInterface
     {
-        return new Response('SHOW');
+        return $this->render('users/form.php');
+    }
+    
+    /**
+     * @param ClientMessageInterface $request
+     *
+     * @return ServerMessageInterface
+     */
+    public function delete(ClientMessageInterface $request): ServerMessageInterface
+    {
+        return $this->render('users/delete.php');
+    }
+    
+    /**
+     * @param ClientMessageInterface $request
+     *
+     * @return ServerMessageInterface
+     */
+    public function add(ClientMessageInterface $request): ServerMessageInterface
+    {
+        return $this->render('users/form.php');
     }
 }

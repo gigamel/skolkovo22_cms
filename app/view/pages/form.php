@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
-    <a href="/pages/">Pages</a> > <span>New</span>
+    <a href="/admin/pages/page/1">Pages</a> > <span>Form</span>
 </div>
-<h1>New Page</h1>
+<h1>Page</h1>
 <form method="POST" action="">
     <div class="mb-3">
         <input type="text" name="title" placeholder="Title" class="form-control"/>
