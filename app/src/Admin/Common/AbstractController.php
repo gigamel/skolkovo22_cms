@@ -14,9 +14,6 @@ abstract class AbstractController
 {
     /** @var RouterInterface */
     protected $router;
-    
-    /** @var TemplateEngineInterface */
-    protected $templateEngine;
 
     /**
      * @param RouterInterface $router
@@ -27,16 +24,6 @@ abstract class AbstractController
     {
         $this->router = $router;
     }
-    
-    /**
-     * @param TemplateEngineInterface $templateEngine
-     *
-     * @return void
-     */
-    final public function setTemplateEngine(TemplateEngineInterface $templateEngine): void
-    {
-        $this->templateEngine = $templateEngine;
-    }
 
     /**
      * @param string $view
@@ -46,7 +33,7 @@ abstract class AbstractController
      *
      * @return ServerMessageInterface
      */
-    public function render(
+    final protected function render(
         string $view,
         array $vars = [],
         int $statusCode = ServerMessageInterface::STATUS_OK,
@@ -65,7 +52,7 @@ abstract class AbstractController
      *
      * @return string
      */
-    protected function renderView(string $view, array $vars = []): string
+    final protected function renderView(string $view, array $vars = []): string
     {
         $content = '';
 
