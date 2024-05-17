@@ -1,4 +1,4 @@
-<?php /** @var \App\Framework\Render\TemplateEngineInterface $this */  ?>
+<?php /** @var \App\Framework\Visual\ThemeInterface $this */  ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>

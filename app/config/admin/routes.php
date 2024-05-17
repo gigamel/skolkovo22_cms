@@ -8,17 +8,9 @@ use App\Admin\Controller\DashboardController;
 use App\Admin\Controller\EstatesController;
 use App\Admin\Controller\PagesController;
 use App\Admin\Controller\UsersController;
-use App\Admin\Http\Router;
-use App\Common\Browser\Url;
 use App\Framework\Http\Protocol\ClientMessageInterface;
 
-$router = new Router(
-    [
-        'id'   => '[1-9]+[0-9]*',
-        'page' => '[1-9]+[0-9]*',
-    ],
-    Url::webRoot()
-);
+/** @var \App\Framework\Http\Routing\RouterInterface $router */
 
 $router->route(
     'dashboard',

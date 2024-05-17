@@ -8,7 +8,6 @@ use App\Common\Base\Directory;
 use App\Framework\Http\Protocol\ServerMessageInterface;
 use App\Framework\Http\Response;
 use App\Framework\Http\Routing\RouterInterface;
-use App\Framework\Render\TemplateEngineInterface;
 
 abstract class AbstractController
 {

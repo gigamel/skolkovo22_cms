@@ -4,19 +4,11 @@ declare(strict_types=1);
 
 namespace App\Admin\Http;
 
-use App\Framework\Http\Router as SkolkovoRouter;
+use App\Common\Browser\Url;
+use App\Framework\Http\Router as CommonRouter;
 
-class Router extends SkolkovoRouter
+class Router extends CommonRouter
 {
-    /**
-     * @param array $segments
-     * @param string $webRoot
-     */
-    public function __construct(array $segments = [], protected string $webRoot = '')
-    {
-        parent::__construct($segments);
-    }
-    
     /**
      * @inheritDoc
      */
@@ -29,7 +21,7 @@ class Router extends SkolkovoRouter
     ): void {
         parent::route(
             $name,
-            rtrim($this->webRoot, '/') . '/' . ltrim($rule, '/'),
+            rtrim(Url::webRoot(), '/') . '/' . ltrim($rule, '/'),
             $controller,
             $action,
             $methods
