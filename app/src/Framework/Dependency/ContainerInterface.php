@@ -5,26 +5,33 @@ namespace App\Framework\Dependency;
 interface ContainerInterface
 {
     /**
-     * @param string $id
-     * @param mixed $dependency
+     * @param string $interfaceOrClass
+     * @param mixed $class
      *
      * @return void
      */
-    public function set(string $id, mixed $dependency): void;
+    public function set(string $interfaceOrClass, string $class): void;
     
     /**
-     * @param string $id
+     * @param string $interfaceOrClass
      *
-     * @return mixed
+     * @return object
      *
      * @throws UnknownDependencyException
      */
-    public function get(string $id): mixed;
+    public function get(string $interfaceOrClass): object;
     
     /**
-     * @param string $id
+     * @param string $interfaceOrClass
      *
      * @return bool
      */
-    public function has(string $id): bool;
+    public function has(string $interfaceOrClass): bool;
+
+    /**
+     * @param string $source
+     *
+     * @return void
+     */
+    public function import(string $source): void;
 }

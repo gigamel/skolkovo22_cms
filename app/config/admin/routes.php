@@ -2,174 +2,169 @@
 
 declare(strict_types=1);
 
-use App\Admin\Controller\AuthorizationController;
-use App\Admin\Controller\CategoriesController;
-use App\Admin\Controller\DashboardController;
-use App\Admin\Controller\EstatesController;
-use App\Admin\Controller\PagesController;
-use App\Admin\Controller\UsersController;
+use App\Admin\Controller;
+use App\Framework\Dependency\ContainerInterface;
 use App\Framework\Http\Protocol\ClientMessageInterface;
+use App\Framework\Http\Routing\RouterInterface;
 
-/** @var \App\Framework\Http\Routing\RouterInterface $router */
+/** @var ContainerInterface $container */
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'dashboard',
     '/',
-    DashboardController::class,
+    Controller\DashboardController::class,
     'dashboard',
     [ClientMessageInterface::METHOD_GET]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'authorization.login',
     '/login/',
-    AuthorizationController::class,
+    Controller\AuthorizationController::class,
     'login',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'authorization.logout',
     '/logout/',
-    AuthorizationController::class,
+    Controller\AuthorizationController::class,
     'logout',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'settings',
     '/settings/',
-    DashboardController::class,
+    Controller\DashboardController::class,
     'settings',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'users',
     '/users/page/{page}',
-    UsersController::class,
+    Controller\UsersController::class,
     'list',
     [ClientMessageInterface::METHOD_GET]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'users.add',
     '/users/add/',
-    UsersController::class,
+    Controller\UsersController::class,
     'show',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'users.edit',
     '/users/edit/{id}',
-    UsersController::class,
+    Controller\UsersController::class,
     'show',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'users.delete',
     '/users/delete/{id}',
-    UsersController::class,
+    Controller\UsersController::class,
     'delete',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'pages',
     '/pages/page/{page}',
-    PagesController::class,
+    Controller\PagesController::class,
     'list',
     [ClientMessageInterface::METHOD_GET]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'pages.add',
     '/pages/add/',
-    PagesController::class,
+    Controller\PagesController::class,
     'add',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'pages.edit',
     '/pages/edit/{id}',
-    PagesController::class,
+    Controller\PagesController::class,
     'show',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'pages.delete',
     '/pages/delete/{id}',
-    PagesController::class,
+    Controller\PagesController::class,
     'delete',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'estates',
     '/estates/page/{page}',
-    EstatesController::class,
+    Controller\EstatesController::class,
     'list',
     [ClientMessageInterface::METHOD_GET]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'estates.edit',
     '/estates/edit/{id}',
-    EstatesController::class,
+    Controller\EstatesController::class,
     'show',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'estates.add',
     '/estates/add/',
-    EstatesController::class,
+    Controller\EstatesController::class,
     'add',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'estates.delete',
     '/estates/delete/{id}',
-    EstatesController::class,
+    Controller\EstatesController::class,
     'delete',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'estates.categories',
     '/estates/categories/page/{page}',
-    CategoriesController::class,
+    Controller\CategoriesController::class,
     'list',
     [ClientMessageInterface::METHOD_GET]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'estates.category.add',
     '/estates/category/add/',
-    CategoriesController::class,
+    Controller\CategoriesController::class,
     'add',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'estates.category.edit',
     '/estates/category/edit/{id}',
-    CategoriesController::class,
+    Controller\CategoriesController::class,
     'show',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
 
-$router->route(
+$container->get(RouterInterface::class)->route(
     'estates.category.delete',
     '/estates/category/delete/{id}',
-    CategoriesController::class,
+    Controller\CategoriesController::class,
     'delete',
     [ClientMessageInterface::METHOD_GET, ClientMessageInterface::METHOD_POST]
 );
-
-return $router;

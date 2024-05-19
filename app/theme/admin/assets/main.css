@@ -18,10 +18,18 @@ header {
 }
 
 .logo {
+    line-height: 1;
     color: #62d9fb;
+    font-weight: 700;
+    padding: 2px;
+    font-size: 75%;
+    transition: all .5s ease-out;
 }
 .logo:hover {
-    color: #aa9cd3;
+    color: #da00ff;
+}
+.logo > span {
+    font-size: 125%;
 }
 
 header,

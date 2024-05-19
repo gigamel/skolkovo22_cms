@@ -8,7 +8,6 @@ use App\Admin\Http\Pipeline\ApplicationPipeline;
 use App\Admin\Http\Pipeline\AuthMiddleware;
 use App\Admin\Http\Router;
 use App\Common\Base\Directory;
-use App\Common\Dependency\Container;
 use App\Common\Http\ExceptionHandler;
 use App\Common\Render\TemplateEngine;
 use App\Common\Storage\Connection;
@@ -43,11 +42,12 @@ class Application
     protected function processApplication(): void
     {
         $container = $this->loadDIContainer();
+        $this->setCommonDependencies($container);
 
-        $router = $this->loadRouter();
+        $this->loadRoutes($container);
         
         $request = new Request();
-        $route = $router->handle($request);
+        $route = $container->get(RouterInterface::class)->handle($request);
 
         $response = $this->processResponse($request, $route);
         $response->send();
@@ -93,17 +93,13 @@ class Application
     }
     
     /**
-     * @return RouterInterface
+     * @param ContainerInterface $container
+     *
+     * @return void
      */
-    protected function loadRouter(): RouterInterface
+    protected function loadRoutes(ContainerInterface $container): void
     {
-        $router = new Router([
-            'id'   => '[1-9]+[0-9]*',
-            'page' => '[1-9]+[0-9]*',
-        ]);
-
         require_once Directory::config() . '/admin/routes.php';
-        return $router;
     }
 
     /**
@@ -111,8 +107,17 @@ class Application
      */
     protected function loadDIContainer(): ContainerInterface
     {
-        $container = new Container();
+        return require_once(Directory::config() . '/container.php');
+    }
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return void
+     */
+    protected function setCommonDependencies(ContainerInterface $container): void
+    {
+        $container->set(RouterInterface::class, Router::class);
         $container->set(ConnectionInterface::class, Connection::class);
-        return $container;
     }
 }

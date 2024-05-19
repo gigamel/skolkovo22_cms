@@ -18,7 +18,10 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2">
-                        <a href="/admin/" class="logo">Skolkovo22CMS</a>
+                        <a href="/admin/" class="logo">
+                            Skolkovo22
+                            <span>CMS</span>
+                        </a>
                     </div>
                     <div class="col-md-9">
                         <a href="/admin/settings/">Settings</a>
