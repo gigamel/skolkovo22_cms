@@ -6,18 +6,15 @@ namespace App\Admin;
 
 use App\Admin\Http\Pipeline\ApplicationPipeline;
 use App\Admin\Http\Pipeline\AuthMiddleware;
-use App\Admin\Http\Router;
 use App\Common\Base\Directory;
 use App\Common\Http\ThrowableHandler;
 use App\Common\Render\TemplateEngine;
-use App\Common\Storage\Connection;
 use App\Framework\Dependency\ContainerInterface;
 use App\Framework\Http\Protocol\ClientMessageInterface;
 use App\Framework\Http\Protocol\ServerMessageInterface;
 use App\Framework\Http\Request;
 use App\Framework\Http\Routing\RouteInterface;
 use App\Framework\Http\Routing\RouterInterface;
-use App\Framework\Storage\ConnectionInterface;
 use Throwable;
 
 class Application
@@ -110,7 +107,6 @@ class Application
      */
     protected function setCommonDependencies(ContainerInterface $container): void
     {
-        $container->set(RouterInterface::class, Router::class);
-        $container->set(ConnectionInterface::class, Connection::class);
+        require_once Directory::config() . '/services.php';
     }
 }
