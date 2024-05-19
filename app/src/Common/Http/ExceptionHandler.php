@@ -44,7 +44,7 @@ class ExceptionHandler implements ExceptionHandlerInterface
         require_once($file ?? $this->defaultTemplate);
         $body = ob_get_contents();
         ob_end_clean();
-        
-        return new Response($body, $e->getCode() ?: 500);
+
+        return new Response($body, is_string($e->getCode()) ? 500 : ($e->getCode() ?: 500));
     }
 }

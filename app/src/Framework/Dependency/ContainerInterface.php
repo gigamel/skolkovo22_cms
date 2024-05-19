@@ -6,7 +6,7 @@ interface ContainerInterface
 {
     /**
      * @param string $interfaceOrClass
-     * @param mixed $class
+     * @param string $class
      *
      * @return void
      */

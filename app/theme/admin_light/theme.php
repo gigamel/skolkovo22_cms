@@ -1,4 +1,4 @@
-<?php /** @var \App\Framework\Visual\ThemeInterface $this */  ?>
+<?php /** @var \App\Framework\Render\TemplateEngineInterface $this */  ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -18,12 +18,15 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2">
-                        <a href="/admin/" class="logo">Skolkovo22CMS</a>
+                        <a href="/admin/" class="logo">
+                            Skolkovo22
+                            <span>CMS</span>
+                        </a>
                     </div>
                     <div class="col-md-9">
                         <a href="/admin/settings/">Settings</a>
                         <a href="/admin/users/page/1">Users</a>
-                        <a href="/admin/#">Go to public</a>
+                        <a href="/">Go to public</a>
                     </div>
                 <div class="col-md-1">
                     <div class="logout">

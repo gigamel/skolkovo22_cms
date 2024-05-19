@@ -26,7 +26,7 @@
                     <div class="col-md-9">
                         <a href="/admin/settings/">Settings</a>
                         <a href="/admin/users/page/1">Users</a>
-                        <a href="/admin/#">Go to public</a>
+                        <a href="/">Go to public</a>
                     </div>
                 <div class="col-md-1">
                     <div class="logout">

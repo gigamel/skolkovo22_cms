@@ -8,7 +8,7 @@ use App\Admin\Http\Pipeline\ApplicationPipeline;
 use App\Admin\Http\Pipeline\AuthMiddleware;
 use App\Admin\Http\Router;
 use App\Common\Base\Directory;
-use App\Common\Http\ExceptionHandler;
+use App\Common\Http\ThrowableHandler;
 use App\Common\Render\TemplateEngine;
 use App\Common\Storage\Connection;
 use App\Framework\Dependency\ContainerInterface;
@@ -51,10 +51,10 @@ class Application
 
         $response = $this->processResponse($request, $route);
         $response->send();
-        
+
         $templateEngine = new TemplateEngine(Directory::theme());
         $templateEngine->setContent($response->getBody());
-        $templateEngine->includeTheme('admin');
+        $templateEngine->includeTheme('admin_light');
     }
     
     /**
@@ -82,14 +82,7 @@ class Application
      */
     protected function processThrowable(Throwable $e): void
     {
-        if ($e instanceof \Exception) {
-            $response = (new ExceptionHandler())->handle($e);
-            $response->send();
-            echo $response->getBody();
-        } else {
-            echo sprintf('<pre style="padding:15px;background-color:purple;color:#eee;">%s [%s]</pre>', $e->getMessage(), get_class($e));
-            echo sprintf('<pre style="padding:15px;background-color:#eee;border:1px solid purple;">%s</pre>', $e->getTraceAsString());
-        }
+        (new ThrowableHandler())->handle($e);
     }
     
     /**

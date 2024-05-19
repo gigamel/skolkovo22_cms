@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Common\Dependency;
 
 use App\Framework\Dependency\ContainerInterface;
-use App\Framework\Dependency\UnknownDependencyException;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
@@ -22,10 +21,7 @@ class Container implements ContainerInterface
     protected $_parameters = [];
 
     /**
-     * @param string $interfaceOrClass
-     * @param mixed $class
-     *
-     * @return void
+     * @inheritDoc
      */
     public function set(string $interfaceOrClass, string $class): void
     {
@@ -33,11 +29,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @param string $interfaceOrClass
-     *
-     * @return object
-     *
-     * @throws UnknownDependencyException
+     * @inheritDoc
      */
     public function get(string $interfaceOrClass): object
     {
@@ -72,9 +64,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @param string $interfaceOrClass
-     *
-     * @return bool
+     * @inheritDoc
      */
     public function has(string $interfaceOrClass): bool
     {
@@ -83,9 +73,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @param string $source
-     *
-     * @return void
+     * @inheritDoc
      */
     public function import(string $source): void
     {
