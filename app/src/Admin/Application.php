@@ -19,11 +19,16 @@ use Throwable;
 
 class Application
 {
+    /** @var ClientMessageInterface */
+    protected $httpRequest;
+
     /**
      * @return void
      */
     public function run(): void
     {
+        $this->httpRequest = new Request();
+
         try {
             $this->processApplication();
         } catch (Throwable $e) {
@@ -42,11 +47,9 @@ class Application
         $this->setCommonDependencies($container);
 
         $this->loadRoutes($container);
-        
-        $request = new Request();
-        $route = $container->get(RouterInterface::class)->handle($request);
+        $route = $container->get(RouterInterface::class)->handle($this->httpRequest);
 
-        $response = $this->processResponse($request, $route);
+        $response = $this->processResponse($route);
         $response->send();
 
         $templateEngine = new TemplateEngine(Directory::theme());
@@ -55,21 +58,20 @@ class Application
     }
     
     /**
-     * @param ClientMessageInterface $request
      * @param RouteInterface $route
      *
      * @return ServerMessageInterface
      */
-    protected function processResponse(ClientMessageInterface $request, RouteInterface $route): ServerMessageInterface
+    protected function processResponse(RouteInterface $route): ServerMessageInterface
     {
-        $request->setAttribute('authorized', 'true');
+        $this->httpRequest->setAttribute('authorized', 'true');
 
         $middlewares = [
             new AuthMiddleware(),
         ];
 
         $pipeline = new ApplicationPipeline($route, $middlewares);
-        return $pipeline->handle($request);
+        return $pipeline->handle($this->httpRequest);
     }
 
     /**

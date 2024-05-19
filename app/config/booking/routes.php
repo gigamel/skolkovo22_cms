@@ -1,3 +1,5 @@
 <?php
 
-/** @var \App\Framework\Http\Routing\RouterInterface $router */
+use App\Framework\Http\Routing\RouterInterface;
+
+/** @var RouterInterface $router */
