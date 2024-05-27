@@ -1,6 +1,8 @@
 <?php
 
+use App\Common\Base\Directory;
 use App\Framework\Http\Routing\RouterInterface;
+use App\Framework\Render\TemplateEngineInterface;
 use App\Framework\Storage\ConnectionInterface;
 
 return [
@@ -14,5 +16,8 @@ return [
             'id' => '[1-9]+[0-9]*',
             'page' => '[1-9]+[0-9]*',
         ],
+    ],
+    TemplateEngineInterface::class => [
+        'themePath' => Directory::theme(),
     ],
 ];

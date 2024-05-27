@@ -27,11 +27,11 @@ class Connection implements ConnectionInterface
     ) {
     }
     
-/**
+    /**
      * @return PDO
-    *
-    * @throws PDOException
-    */
+     *
+     * @throws PDOException
+     */
     public function getConnection(): PDO
     {
         if (is_null($this->_connection)) {

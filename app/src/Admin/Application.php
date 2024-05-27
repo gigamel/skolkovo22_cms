@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
-use App\Admin\Http\Pipeline\ApplicationPipeline;
-use App\Admin\Http\Pipeline\AuthMiddleware;
 use App\Common\Base\Directory;
 use App\Common\Http\ThrowableHandler;
-use App\Common\Render\TemplateEngine;
 use App\Framework\Dependency\ContainerInterface;
+use App\Framework\Http\NotFoundException;
 use App\Framework\Http\Protocol\ClientMessageInterface;
 use App\Framework\Http\Protocol\ServerMessageInterface;
 use App\Framework\Http\Request;
 use App\Framework\Http\Routing\RouteInterface;
+use App\Framework\Http\Routing\RouteNotFoundException;
 use App\Framework\Http\Routing\RouterInterface;
+use App\Framework\Render\TemplateEngineInterface;
+use ReflectionClass;
 use Throwable;
 
 class Application
@@ -45,33 +46,46 @@ class Application
     {
         $container = $this->loadDIContainer();
         $this->setCommonDependencies($container);
+        $this->loadModules($container);
 
-        $this->loadRoutes($container);
-        $route = $container->get(RouterInterface::class)->handle($this->httpRequest);
+        try {
+            $route = $container->get(RouterInterface::class)->handle($this->httpRequest);
+        } catch (RouteNotFoundException $e) {
+            throw new NotFoundException('Unknown resource');
+        }
 
-        $response = $this->processResponse($route);
+        $response = $this->processResponse($route, $container);
         $response->send();
 
-        $templateEngine = new TemplateEngine(Directory::theme());
-        $templateEngine->setContent($response->getBody());
-        $templateEngine->includeTheme('admin_light');
+        $container->get(TemplateEngineInterface::class)->setContent($response->getBody());
+        $container->get(TemplateEngineInterface::class)->includeTheme('admin_light');
     }
     
     /**
      * @param RouteInterface $route
+     * @param ContainerInterface $container
      *
      * @return ServerMessageInterface
+     *
+     * @throws \ReflectionException
      */
-    protected function processResponse(RouteInterface $route): ServerMessageInterface
+    protected function processResponse(RouteInterface $route, ContainerInterface $container): ServerMessageInterface
     {
-        $this->httpRequest->setAttribute('authorized', 'true');
+        $reflection = new ReflectionClass($route->getController());
 
-        $middlewares = [
-            new AuthMiddleware(),
-        ];
+        $constructor = $reflection->getConstructor();
+        if (is_null($constructor)) {
+            $controller = $reflection->newInstance();
+        } else {
+            $constructorArgs = [];
+            foreach ($constructor->getParameters() as $reflectionParameter) {
+                $constructorArgs[] = $container->get($reflectionParameter->getType()->getName());
+            }
 
-        $pipeline = new ApplicationPipeline($route, $middlewares);
-        return $pipeline->handle($this->httpRequest);
+            $controller = $reflection->newInstanceArgs($constructorArgs);
+        }
+
+        return $controller->{$route->getAction()}($this->httpRequest);
     }
 
     /**
@@ -82,16 +96,6 @@ class Application
     protected function processThrowable(Throwable $e): void
     {
         (new ThrowableHandler())->handle($e);
-    }
-    
-    /**
-     * @param ContainerInterface $container
-     *
-     * @return void
-     */
-    protected function loadRoutes(ContainerInterface $container): void
-    {
-        require_once Directory::config() . '/admin/routes.php';
     }
 
     /**
@@ -110,5 +114,26 @@ class Application
     protected function setCommonDependencies(ContainerInterface $container): void
     {
         require_once Directory::config() . '/services.php';
+    }
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return void
+     */
+    protected function loadModules(ContainerInterface $container): void
+    {
+        $provider = 'modules\\%s\\Provider';
+
+        $modules = require_once(Directory::config() . '/modules.php');
+        foreach ($modules as $module) {
+            $providerClass = sprintf($provider, $module);
+            if (!class_exists($providerClass)) {
+                continue;
+            }
+
+            $providerInstance = new $providerClass();
+            $providerInstance->setupRoutes($container->get(RouterInterface::class));
+        }
     }
 }

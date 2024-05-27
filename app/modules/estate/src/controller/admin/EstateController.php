@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Admin\Controller;
+namespace modules\estate\src\controller\admin;
 
 use App\Admin\Common\AbstractController;
 use App\Framework\Http\Protocol\ClientMessageInterface;
 use App\Framework\Http\Protocol\ServerMessageInterface;
-use App\Framework\Http\Response;
 
-class CategoriesController extends AbstractController
+class EstateController extends AbstractController
 {
     /**
      * @param ClientMessageInterface $request
@@ -18,9 +17,9 @@ class CategoriesController extends AbstractController
      */
     public function list(ClientMessageInterface $request): ServerMessageInterface
     {
-        return $this->render('estates/category/list.php');
+        return $this->render('estates/list.php');
     }
-    
+
     /**
      * @param ClientMessageInterface $request
      *
@@ -28,9 +27,9 @@ class CategoriesController extends AbstractController
      */
     public function add(ClientMessageInterface $request): ServerMessageInterface
     {
-        return $this->render('estates/category/form.php');
+        return $this->render('estates/form.php');
     }
-    
+
     /**
      * @param ClientMessageInterface $request
      *
@@ -38,9 +37,9 @@ class CategoriesController extends AbstractController
      */
     public function delete(ClientMessageInterface $request): ServerMessageInterface
     {
-        return $this->render('estates/category/delete.php');
+        return $this->render('estates/delete.php');
     }
-    
+
     /**
      * @param ClientMessageInterface $request
      *
@@ -48,6 +47,6 @@ class CategoriesController extends AbstractController
      */
     public function show(ClientMessageInterface $request): ServerMessageInterface
     {
-        return $this->render('estates/category/form.php');
-    }
+        return $this->render('estates/form.php');
+    } 
 }

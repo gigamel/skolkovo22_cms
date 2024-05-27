@@ -8,6 +8,6 @@ use App\Common\Base\Directory;
 $container = new Container();
 
 /** import parameters */
-$container->import(Directory::config() . '/di.php');
+$container->importParameters(Directory::config() . '/di.php');
 
 return $container;

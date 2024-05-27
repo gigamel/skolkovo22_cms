@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Admin\Controller;
+namespace modules\auth\src\controller;
 
 use App\Admin\Common\AbstractController;
 use App\Framework\Http\Protocol\ClientMessageInterface;
 use App\Framework\Http\Protocol\ServerMessageInterface;
-use App\Framework\Http\Response;
 
-class AuthorizationController extends AbstractController
+class AdminController extends AbstractController
 {
     /**
      * @param ClientMessageInterface $request
@@ -20,7 +19,7 @@ class AuthorizationController extends AbstractController
     {
         return $this->render('authorization/login.php');
     }
-    
+
     /**
      * @param ClientMessageInterface $request
      *

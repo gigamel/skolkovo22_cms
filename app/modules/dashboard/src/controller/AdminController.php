@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Admin\Controller;
+namespace modules\dashboard\src\controller;
 
 use App\Admin\Common\AbstractController;
 use App\Framework\Http\Protocol\ClientMessageInterface;
 use App\Framework\Http\Protocol\ServerMessageInterface;
 
-class DashboardController extends AbstractController
+class AdminController extends AbstractController
 {
     /**
      * @param ClientMessageInterface $request
@@ -30,3 +30,4 @@ class DashboardController extends AbstractController
         return $this->render('dashboard/settings.php');
     }
 }
+

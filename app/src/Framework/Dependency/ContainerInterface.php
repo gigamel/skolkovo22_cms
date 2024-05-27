@@ -33,5 +33,5 @@ interface ContainerInterface
      *
      * @return void
      */
-    public function import(string $source): void;
+    public function importParameters(string $source): void;
 }

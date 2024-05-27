@@ -19,13 +19,12 @@ if (!$e instanceof \Throwable) {
                 padding: 0;
             }
             body {
-                background-color: #111;
                 font-family: sans-serif;
-                color: #7f3a7d;
+                color: #333333;
                 font-size: 20px;
             }
             h1 {
-                background-color: #7f3a7d;
+                background-color: #333333;
                 font-size: 32px;
                 color: #ffffff;
                 padding: 15px;
@@ -33,12 +32,23 @@ if (!$e instanceof \Throwable) {
             .content {
                 padding: 15px;
             }
+            .container {
+                margin: auto;
+                max-width: 960px;
+                padding: 30px 15px;
+            }
+            a {
+                color: #bfbfbf;
+            }
         </style>
     </head>
     <body>
-        <h1>Page Not Found</h1>
-        <div class="content">
-            <p><?= $e->getMessage(); ?></p>
+        <div class="container">
+            <h1>Page Not Found</h1>
+            <div class="content">
+                <p><?= $e->getMessage(); ?></p>
+                <p><a href="/">Home page</a></p>
+            </div>
         </div>
     </body>
 </html>

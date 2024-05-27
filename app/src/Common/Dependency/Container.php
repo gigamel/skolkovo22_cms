@@ -75,7 +75,7 @@ class Container implements ContainerInterface
     /**
      * @inheritDoc
      */
-    public function import(string $source): void
+    public function importParameters(string $source): void
     {
         if (!file_exists($source)) {
             return;
