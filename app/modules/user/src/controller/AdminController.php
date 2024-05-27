@@ -26,7 +26,7 @@ final class AdminController extends AbstractController
     public function list(ClientMessageInterface $request): ServerMessageInterface
     {
         return $this->render(
-        'users/list.php',
+            'users/list.php',
             [
                 'users' => $this->userRepository->getList()
             ]
@@ -41,28 +41,28 @@ final class AdminController extends AbstractController
     public function show(ClientMessageInterface $request): ServerMessageInterface
     {
         return $this->render(
-        'users/form.php',
+            'users/form.php',
             [
                 'user' => $this->userRepository->getById((int)$request->getAttribute('id'))
             ]
         );
     }
 
-/**
-    * @param ClientMessageInterface $request
-    *
-    * @return ServerMessageInterface
-    */
+    /**
+     * @param ClientMessageInterface $request
+     *
+     * @return ServerMessageInterface
+     */
     public function delete(ClientMessageInterface $request): ServerMessageInterface
     {
         return $this->render('users/delete.php');
     }
 
-/**
-    * @param ClientMessageInterface $request
-    *
-    * @return ServerMessageInterface
-    */
+    /**
+     * @param ClientMessageInterface $request
+     *
+     * @return ServerMessageInterface
+     */
     public function add(ClientMessageInterface $request): ServerMessageInterface
     {
         return $this->render('users/new.php');

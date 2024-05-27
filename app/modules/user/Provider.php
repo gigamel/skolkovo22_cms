@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace modules\user;
 
+use App\Admin\Provider\RoutesProviderInterface;
 use App\Framework\Http\Protocol\ClientMessageInterface;
 use App\Framework\Http\Routing\RouterInterface;
 use modules\user\src\controller\AdminController;
 
-class Provider
+class Provider implements RoutesProviderInterface
 {
     /**
     * @param RouterInterface $router

@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace modules\estate;
 
+use App\Admin\Provider\RoutesProviderInterface;
 use App\Framework\Http\Protocol\ClientMessageInterface;
 use App\Framework\Http\Routing\RouterInterface;
 use modules\estate\src\controller\admin\CategoryController;
 use modules\estate\src\controller\admin\EstateController;
 
-class Provider
+class Provider implements RoutesProviderInterface
 {
     /**
      * @param RouterInterface $router

@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use App\Admin\Provider\EventsProviderInterface;
+use App\Admin\Provider\RoutesProviderInterface;
 use App\Common\Base\Directory;
 use App\Common\Http\ThrowableHandler;
 use App\Framework\Dependency\ContainerInterface;
+use App\Framework\EventsListener\EventsListenerInterface;
 use App\Framework\Http\NotFoundException;
 use App\Framework\Http\Protocol\ClientMessageInterface;
 use App\Framework\Http\Protocol\ServerMessageInterface;
@@ -133,7 +136,13 @@ class Application
             }
 
             $providerInstance = new $providerClass();
-            $providerInstance->setupRoutes($container->get(RouterInterface::class));
+            if ($providerInstance instanceof RoutesProviderInterface) {
+                $providerInstance->setupRoutes($container->get(RouterInterface::class));
+            }
+
+            if ($providerInstance instanceof EventsProviderInterface) {
+                $providerInstance->registerEvents($container->get(EventsListenerInterface::class));
+            }
         }
     }
 }
