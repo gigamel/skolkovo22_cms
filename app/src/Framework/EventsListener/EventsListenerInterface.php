@@ -6,16 +6,17 @@ interface EventsListenerInterface
 {
     /**
      * @param string $name
-     * @param callable $handler
+     * @param string $eventClassName
      *
      * @return void
      */
-    public function on(string $name, callable $handler): void;
+    public function on(string $name, string $eventClassName): void;
     
     /**
      * @param string $name
+     * @param mixed ...$args
      *
      * @return void
      */
-    public function trigger(string $name): void;
+    public function trigger(string $name, ...$args): void;
 }

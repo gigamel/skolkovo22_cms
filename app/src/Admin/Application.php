@@ -50,31 +50,44 @@ class Application
         $container = $this->loadDIContainer();
         $this->setCommonDependencies($container);
         $this->loadModules($container);
+        $this->processRouter($container);
 
+        $response = $this->processResponse($container);
+        $response->send();
+
+        $container->get(TemplateEngineInterface::class)->setContent($response->getBody());
+        $container->get(TemplateEngineInterface::class)->includeTheme('admin_light');
+    }
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return void
+     */
+    protected function processRouter(ContainerInterface $container): void
+    {
         try {
             $route = $container->get(RouterInterface::class)->handle($this->httpRequest);
         } catch (RouteNotFoundException $e) {
             throw new NotFoundException('Unknown resource');
         }
 
-        $response = $this->processResponse($route, $container);
-        $response->send();
+        $this->httpRequest->setAttribute('controller', $route->getController());
+        $this->httpRequest->setAttribute('action', $route->getAction());
 
-        $container->get(TemplateEngineInterface::class)->setContent($response->getBody());
-        $container->get(TemplateEngineInterface::class)->includeTheme('admin_light');
+        $container->get(EventsListenerInterface::class)->trigger('route.found', $this->httpRequest);
     }
-    
+
     /**
-     * @param RouteInterface $route
      * @param ContainerInterface $container
      *
      * @return ServerMessageInterface
      *
      * @throws \ReflectionException
      */
-    protected function processResponse(RouteInterface $route, ContainerInterface $container): ServerMessageInterface
+    protected function processResponse(ContainerInterface $container): ServerMessageInterface
     {
-        $reflection = new ReflectionClass($route->getController());
+        $reflection = new ReflectionClass($this->httpRequest->getAttribute('controller'));
 
         $constructor = $reflection->getConstructor();
         if (is_null($constructor)) {
@@ -88,7 +101,7 @@ class Application
             $controller = $reflection->newInstanceArgs($constructorArgs);
         }
 
-        return $controller->{$route->getAction()}($this->httpRequest);
+        return $controller->{$this->httpRequest->getAttribute('action')}($this->httpRequest);
     }
 
     /**
