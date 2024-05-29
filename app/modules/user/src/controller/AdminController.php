@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace modules\user\src\controller;
 
 use App\Admin\Common\AbstractController;
-use App\Framework\Http\Protocol\ClientMessageInterface;
-use App\Framework\Http\Protocol\ServerMessageInterface;
 use App\Service\User\UserRepository;
+use Skolkovo22\Http\Protocol\ClientMessageInterface;
+use Skolkovo22\Http\Protocol\ServerMessageInterface;
 
 final class AdminController extends AbstractController
 {

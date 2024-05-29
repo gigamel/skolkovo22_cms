@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Admin\Http;
 
 use App\Common\Browser\Url;
-use App\Framework\Http\Router as CommonRouter;
+use Skolkovo22\Http\Protocol\ClientMessageInterface;
+use Skolkovo22\Http\Router as Skolkovo22Router;
 
-class Router extends CommonRouter
+final class Router extends Skolkovo22Router
 {
     /**
      * @inheritDoc

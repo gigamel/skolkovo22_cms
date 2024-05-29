@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace modules\page;
 
 use App\Admin\Provider\RoutesProviderInterface;
-use App\Framework\Http\Protocol\ClientMessageInterface;
-use App\Framework\Http\Routing\RouterInterface;
 use modules\page\src\controller\AdminController;
+use Skolkovo22\Http\Protocol\ClientMessageInterface;
+use Skolkovo22\Http\Routing\RouterInterface;
 
 class Provider implements RoutesProviderInterface
 {
     /**
-     * @param RouterInterface $router
-     *
-     * @return void
+     * @inheritDoc
      */
     public function setupRoutes(RouterInterface $router): void
     {

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Admin\Common;
 
 use App\Common\Base\Directory;
-use App\Framework\Http\Protocol\ServerMessageInterface;
-use App\Framework\Http\Response;
-use App\Framework\Http\Routing\RouterInterface;
+use Skolkovo22\Http\Protocol\ServerMessageInterface;
+use Skolkovo22\Http\Response;
+use Skolkovo22\Http\Routing\RouterInterface;
 
 abstract class AbstractController
 {

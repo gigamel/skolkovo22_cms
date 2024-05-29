@@ -6,16 +6,14 @@ namespace modules\estate;
 
 use App\Admin\Provider\RoutesProviderInterface;
 use App\Framework\Http\Protocol\ClientMessageInterface;
-use App\Framework\Http\Routing\RouterInterface;
 use modules\estate\src\controller\admin\CategoryController;
 use modules\estate\src\controller\admin\EstateController;
+use Skolkovo22\Http\Routing\RouterInterface;
 
 class Provider implements RoutesProviderInterface
 {
     /**
-     * @param RouterInterface $router
-     *
-     * @return void
+     * @inheritDoc
      */
     public function setupRoutes(RouterInterface $router): void
     {

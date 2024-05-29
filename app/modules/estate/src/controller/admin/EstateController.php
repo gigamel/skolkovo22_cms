@@ -6,7 +6,7 @@ namespace modules\estate\src\controller\admin;
 
 use App\Admin\Common\AbstractController;
 use App\Framework\Http\Protocol\ClientMessageInterface;
-use App\Framework\Http\Protocol\ServerMessageInterface;
+use Skolkovo22\Http\Protocol\ServerMessageInterface;
 
 class EstateController extends AbstractController
 {

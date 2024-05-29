@@ -4,5 +4,14 @@
             "App\\": "src/",
             "modules\\": "modules/"
         }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url":  "git@github.com:gigamel/http-skolkovo22.git"
+        }
+    ],
+    "require": {
+        "gigamel/http-skolkovo22": "^1.1"
     }
 }

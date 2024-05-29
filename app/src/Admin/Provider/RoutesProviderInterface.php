@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Admin\Provider;
 
-use App\Framework\Http\Routing\RouterInterface;
+
+use Skolkovo22\Http\Routing\RouterInterface;
 
 interface RoutesProviderInterface
 {

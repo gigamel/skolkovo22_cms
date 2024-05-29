@@ -1,9 +1,9 @@
 <?php
 
 use App\Common\Base\Directory;
-use App\Framework\Http\Routing\RouterInterface;
 use App\Framework\Render\TemplateEngineInterface;
 use App\Framework\Storage\ConnectionInterface;
+use Skolkovo22\Http\Routing\RouterInterface;
 
 return [
     ConnectionInterface::class => [

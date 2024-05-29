@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace modules\auth\src\event;
 
 use App\Framework\EventsListener\EventInterface;
-use App\Framework\Http\Protocol\ClientMessageInterface;
 use modules\auth\src\controller\AdminController;
+use Skolkovo22\Http\Protocol\ClientMessageInterface;
 
 class CheckAuthEvent implements EventInterface
 {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace modules\estate\src\controller\admin;
 
 use App\Admin\Common\AbstractController;
-use App\Framework\Http\Protocol\ClientMessageInterface;
-use App\Framework\Http\Protocol\ServerMessageInterface;
+use Skolkovo22\Http\Protocol\ClientMessageInterface;
+use Skolkovo22\Http\Protocol\ServerMessageInterface;
 
 class CategoryController extends AbstractController
 {

@@ -11,14 +11,13 @@ use App\Common\Http\ThrowableHandler;
 use App\Framework\Dependency\ContainerInterface;
 use App\Framework\EventsListener\EventsListenerInterface;
 use App\Framework\Http\NotFoundException;
-use App\Framework\Http\Protocol\ClientMessageInterface;
-use App\Framework\Http\Protocol\ServerMessageInterface;
-use App\Framework\Http\Request;
-use App\Framework\Http\Routing\RouteInterface;
 use App\Framework\Http\Routing\RouteNotFoundException;
-use App\Framework\Http\Routing\RouterInterface;
 use App\Framework\Render\TemplateEngineInterface;
 use ReflectionClass;
+use Skolkovo22\Http\Protocol\ClientMessageInterface;
+use Skolkovo22\Http\Protocol\ServerMessageInterface;
+use Skolkovo22\Http\Request;
+use Skolkovo22\Http\Routing\RouterInterface;
 use Throwable;
 
 class Application

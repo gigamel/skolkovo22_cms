@@ -8,15 +8,15 @@ use App\Admin\Provider\EventsProviderInterface;
 use App\Admin\Provider\RoutesProviderInterface;
 use App\Framework\EventsListener\EventsListenerInterface;
 use App\Framework\Http\Protocol\ClientMessageInterface;
-use App\Framework\Http\Routing\RouterInterface;
 use modules\auth\src\controller\AdminController;
 use modules\auth\src\event\CheckAuthEvent;
+use Skolkovo22\Http\Routing\RouterInterface;
 
 class Provider implements RoutesProviderInterface, EventsProviderInterface
 {
     /**
-    * @inheritDoc
-    */
+     * @inheritDoc
+     */
     public function setupRoutes(RouterInterface $router): void
     {
         $router->route(

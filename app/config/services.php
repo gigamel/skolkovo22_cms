@@ -6,10 +6,10 @@ use App\Common\Storage\Connection;
 use App\Framework\Dependency\ContainerInterface;
 use App\Framework\EventsListener\EventsListener;
 use App\Framework\EventsListener\EventsListenerInterface;
-use App\Framework\Http\Routing\RouterInterface;
 use App\Framework\Render\TemplateEngineInterface;
 use App\Framework\Storage\ConnectionInterface;
 use App\Service\User\UserRepository;
+use Skolkovo22\Http\Routing\RouterInterface;
 
 /** @var ContainerInterface $container */
 
