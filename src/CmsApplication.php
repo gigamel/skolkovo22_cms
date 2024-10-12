@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Cms\Controller\ArgumentsParser;
+use App\Cms\ArgumentsParser;
 use App\Cms\DI\Container;
 use App\Cms\DI\ContainerInterface;
 use App\Cms\Http\Server;

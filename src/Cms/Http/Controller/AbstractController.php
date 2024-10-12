@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Cms\Controller;
+namespace App\Cms\Http\Controller;
 
 use App\Common\Http\Protocol\ServerMessageInterface;
 use App\Common\Http\ServerMessage;

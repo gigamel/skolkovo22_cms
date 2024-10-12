@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Cms\Controller\AbstractController;
+use App\Cms\Http\Controller\AbstractController;
 use App\Common\Http\Protocol\ClientMessageInterface;
 use App\Common\Http\Protocol\ServerMessageInterface;
 
