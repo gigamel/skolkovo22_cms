@@ -32,6 +32,6 @@ final class Alias
     
     public function has(string $alias): bool
     {
-        return false !== str_contains($value, '@');
+        return false !== str_contains($alias, '@');
     }
 }

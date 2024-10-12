@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Cms\ArgumentsParser;
+use App\Cms\Config\Alias;
 use App\Cms\DI\Container;
 use App\Cms\DI\ContainerInterface;
 use App\Cms\Http\Server;
@@ -23,9 +24,12 @@ final class CmsApplication
     
     private ?RouterInterface $router = null;
     
+    private Alias $alias;
+    
     public function __construct(?ContainerInterface $container = null)
     {
         $this->container = $container ?? new Container();
+        $this->alias = new Alias();
     }
     
     public function run(): void
@@ -35,6 +39,8 @@ final class CmsApplication
         }
         
         $this->isRunning = true;
+        
+        $this->alias->set('@config', __DIR__ . '/../config');
         
         try {
             $this->container->put(UserRepository::class);
@@ -76,7 +82,7 @@ final class CmsApplication
         }
         
         return $this->router = new Router(
-            require_once(__DIR__ . '/../config/routes.php'),
+            require_once($this->alias->get('@config/routes.php')),
             [
                 'id' => '[1-9]+[0-9]?',
                 'page' => '[1-9]+[0-9]?',
