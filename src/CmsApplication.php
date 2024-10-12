@@ -5,7 +5,8 @@ namespace App;
 use App\Cms\ArgumentsParser;
 use App\Cms\BusinessRules\ActionRules;
 use App\Cms\BusinessRules\ControllerRules;
-use App\Cms\Config\Alias;
+use App\Cms\Core;
+use App\Cms\CoreInterface;
 use App\Cms\DI\Container;
 use App\Cms\DI\ContainerInterface;
 use App\Cms\Http\Server;
@@ -23,16 +24,13 @@ final class CmsApplication
 {
     private bool $isRunning = false;
     
-    private ContainerInterface $container;
+    private CoreInterface $core;
     
     private ?RouterInterface $router = null;
     
-    private Alias $alias;
-    
-    public function __construct(?ContainerInterface $container = null)
+    public function __construct(?CoreInterface $core = null)
     {
-        $this->container = $container ?? new Container();
-        $this->alias = new Alias();
+        $this->core = $core ?? new Core();
     }
     
     public function run(): void
@@ -70,7 +68,7 @@ final class CmsApplication
         
         $this->checkActionBusinessRules($controllerClass, $actionName);
         
-        $parser = (new ArgumentsParser($this->container, $clientMessage));
+        $parser = (new ArgumentsParser($this->core->getContainer(), $clientMessage));
         
         $controllerArguments = $parser->getConstructorArguments($controllerClass);
         $controller = new $controllerClass(...$controllerArguments);
@@ -81,7 +79,7 @@ final class CmsApplication
     
     private function setupAliases(): void
     {
-        $this->alias->set('@config', __DIR__ . '/../config');
+        $this->core->setAlias('@config', __DIR__ . '/../config');
     }
     
     private function getRouter(): RouterInterface
@@ -91,7 +89,7 @@ final class CmsApplication
         }
         
         return $this->router = new Router(
-            require_once($this->alias->get('@config/routes.php')),
+            require_once($this->core->getAlias('@config/routes.php')),
             [
                 'id' => '[1-9]+[0-9]?',
                 'page' => '[1-9]+[0-9]?',
@@ -116,9 +114,9 @@ final class CmsApplication
     
     private function registerCommonDependenies(): void
     {
-        $this->container->put(UserRepository::class);
-        $this->container->put(ProductRepository::class);
-        $this->container->put(PostRepository::class);
+        $this->core->getContainer()->put(UserRepository::class);
+        $this->core->getContainer()->put(ProductRepository::class);
+        $this->core->getContainer()->put(PostRepository::class);
     }
     
     private function getControllerRules(): array
