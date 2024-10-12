@@ -31,7 +31,7 @@ class ServerMessage implements ServerMessageInterface
     }
 
     /**
-     * @param string[] $headers
+     * @inheritDoc
      */
     public function addHeaders(array $headers = []): void
     {
@@ -40,21 +40,16 @@ class ServerMessage implements ServerMessageInterface
         }
     }
     
+    /**
+     * @inheritDoc
+     */
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+    
     public function getStatusCode(): int
     {
         return $this->statusCode;
-    }
-    
-    public function send(): void
-    {
-        if (headers_sent()) {
-            return;
-        }
-        
-        foreach ($this->headers as $header => $value) {
-            header(sprintf('%s: %s', $header, $value), true);
-        }
-        
-        header(sprintf('%s %d %s', 'HTTP/1.1', $this->getStatusCode(), 'Some Status Message')); // Todo
     }
 }

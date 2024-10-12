@@ -31,11 +31,14 @@ interface ServerMessageInterface
     public function addHeader(string $header, string $value): void;
 
     /**
-     * @param string[] $headers
+     * @param list<string> $headers
      */
     public function addHeaders(array $headers = []): void;
     
-    public function getStatusCode(): int;
+    /**
+     * @return list<string>
+     */
+    public function getHeaders(): array;
     
-    public function send(): void;
+    public function getStatusCode(): int;
 }
