@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Cms\ArgumentsParser;
+use App\Cms\BusinessRules\ActionRules;
+use App\Cms\BusinessRules\ControllerRules;
 use App\Cms\Config\Alias;
 use App\Cms\DI\Container;
 use App\Cms\DI\ContainerInterface;
@@ -10,7 +12,8 @@ use App\Cms\Http\Server;
 use App\Common\Http\ClientMessage;
 use App\Common\Http\Router;
 use App\Common\Http\Routing\RouterInterface;
-use App\Common\Http\ThrowableHandler;
+use App\Common\Http\Protocol\ClientMessageInterface;
+use App\Common\Http\Protocol\ServerMessageInterface;
 use App\Service\Blog\PostRepository;
 use App\Service\Catalog\ProductRepository;
 use App\Service\User\UserRepository;
@@ -40,29 +43,32 @@ final class CmsApplication
         
         $this->isRunning = true;
         
-        $this->alias->set('@config', __DIR__ . '/../config');
-        
         try {
-            $this->container->put(UserRepository::class);
-            $this->container->put(ProductRepository::class);
-            $this->container->put(PostRepository::class);
-            
             $this->runCms();
         } catch (Throwable $e) {
             echo sprintf('<pre>%s</pre>', var_export($e, true));
-            
-            (new ThrowableHandler())->handle($e);
         }
     }
     
     private function runCms(): void
     {
-        $router = $this->getRouter();
+        $this->setupAliases();
+        
+        $this->registerCommonDependenies();
         
         $clientMessage = new ClientMessage();
         
-        $handled = $router->handleClientMessage($clientMessage);
+        $serverMessage = $this->getServerMessage($clientMessage);
+        
+        (new Server())->sendMessage($serverMessage);
+    }
+    
+    private function getServerMessage(ClientMessageInterface $clientMessage): ServerMessageInterface
+    {
+        $handled = $this->getRouter()->handleClientMessage($clientMessage);
         [$controllerClass, $actionName] = explode('::', $handled);
+        
+        $this->checkActionBusinessRules($controllerClass, $actionName);
         
         $parser = (new ArgumentsParser($this->container, $clientMessage));
         
@@ -70,9 +76,12 @@ final class CmsApplication
         $controller = new $controllerClass(...$controllerArguments);
         
         $actionArguments = $parser->getActionArguments($controller, $actionName);
-        $serverMessage = $controller->{$actionName}(...$actionArguments);
-        
-        (new Server())->sendMessage($serverMessage);
+        return $controller->{$actionName}(...$actionArguments);
+    }
+    
+    private function setupAliases(): void
+    {
+        $this->alias->set('@config', __DIR__ . '/../config');
     }
     
     private function getRouter(): RouterInterface
@@ -88,5 +97,45 @@ final class CmsApplication
                 'page' => '[1-9]+[0-9]?',
             ]
         );
+    }
+    
+    private function checkActionBusinessRules(string $controller, string $action): void
+    {
+        $controllerRules = new ControllerRules();
+        foreach ($this->getControllerRules() as $rule) {
+            $controllerRules->addRule($rule);
+        }
+        $controllerRules->check($controller);
+        
+        $actionRules = new ActionRules();
+        foreach ($this->getActionRules() as $rule) {
+            $actionRules->addRule($rule);
+        }
+        $actionRules->check($controller, $action);
+    }
+    
+    private function registerCommonDependenies(): void
+    {
+        $this->container->put(UserRepository::class);
+        $this->container->put(ProductRepository::class);
+        $this->container->put(PostRepository::class);
+    }
+    
+    private function getControllerRules(): array
+    {
+        return [
+            new \App\Cms\BusinessRules\Routing\Controller\NameRule(),
+            new \App\Cms\BusinessRules\Routing\Controller\ModifiersRule(),
+            new \App\Cms\BusinessRules\Routing\Controller\InstanceofRule(),
+            new \App\Cms\BusinessRules\Routing\Controller\ConstructorRule(),
+        ];
+    }
+    
+    private function getActionRules(): array
+    {
+        return [
+            new \App\Cms\BusinessRules\Routing\Action\ModifiersRule(),
+            new \App\Cms\BusinessRules\Routing\Action\NameRule(),
+        ];
     }
 }
