@@ -1,3 +1,6 @@
-.fleet/
-app/vendor/
-app/composer.lock
+.idea
+.fleet
+nbproject
+vendor
+composer.lock
+config/app.local.php
