@@ -1,21 +1,21 @@
 <?php declare(strict_types=1);
 
-namespace App\Cms\BusinessRules\Routing\Controller;
+namespace App\Cms\BusinessRules\Controller;
 
+use App\Cms\BusinessRules\ControllerRuleInterface;
 use App\Cms\BusinessRules\Exception;
-use App\Cms\BusinessRules\Routing\ControllerRuleInterface;
 use ReflectionClass;
 
-final class ModifiersRule implements ControllerRuleInterface
+final class NameRule implements ControllerRuleInterface
 {
-    private const string MESSAGE = 'Controller [%s] must not be ABSTRACT';
+    private const string MESSAGE = 'Controller name must be ends with Controller. Actual [%s]';
     
     /**
      * @inheritDoc
      */
     public function check(ReflectionClass $controller): void
     {
-        if ($controller->isAbstract()) {
+        if (!str_ends_with($controller->getName(), 'Controller')) {
             throw new Exception(
                 sprintf(
                     self::MESSAGE,

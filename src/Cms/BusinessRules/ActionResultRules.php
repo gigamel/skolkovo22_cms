@@ -2,28 +2,35 @@
 
 namespace App\Cms\BusinessRules;
 
-use App\Cms\BusinessRules\Exception;
-use App\Cms\BusinessRules\Routing\ActionResultRuleInterface;
-
-final class ActionResultRules
+final class ActionResultRules implements RulesInterface
 {
     private array $rules = [];
+    
+    public function __construct(
+        private string $controller,
+        private string $action,
+        private mixed $result
+    ) {
+    }
     
     public function addRule(ActionResultRuleInterface $rule): void
     {
         $this->rules[] = $rule;
     }
     
-    /**
-     * @throws Exception
-     */
-    public function check(
-        string $controller,
-        string $action,
-        mixed $result
-    ): void {
-        foreach ($this->rules as $rule) {
-            $rule->check($controller, $action, $result);
-        }
+    public function getRules(): array
+    {
+        return [
+            new \App\Cms\BusinessRules\ActionResult\ServerMessageRule(),
+        ];
+    }
+    
+    public function getArguments(): array
+    {
+        return [
+            $this->controller,
+            $this->action,
+            $this->result,
+        ];
     }
 }

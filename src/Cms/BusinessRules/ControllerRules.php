@@ -2,33 +2,36 @@
 
 namespace App\Cms\BusinessRules;
 
-use App\Cms\BusinessRules\Exception;
-use App\Cms\BusinessRules\Routing\ControllerRuleInterface;
 use ReflectionClass;
 
-final class ControllerRules
+final class ControllerRules implements RulesInterface
 {
-    /** @var list<ControllerRuleInteface> */
     private array $rules = [];
+    
+    public function __construct(
+        private string $controller
+    ) {
+    }
     
     public function addRule(ControllerRuleInterface $rule): void
     {
         $this->rules[] = $rule;
     }
     
-    /**
-     * @throws Exception
-     */
-    public function check(string $class): void
+    public function getRules(): array
     {
-        if (!$this->rules) {
-            return;
-        }
-        
-        $reflectionClass = new ReflectionClass($class);
-        
-        foreach ($this->rules as $rule) {
-            $rule->check($reflectionClass);
-        }
+        return [
+            new \App\Cms\BusinessRules\Controller\NameRule(),
+            new \App\Cms\BusinessRules\Controller\ModifiersRule(),
+            new \App\Cms\BusinessRules\Controller\InstanceofRule(),
+            new \App\Cms\BusinessRules\Controller\ConstructorRule(),
+        ];
+    }
+    
+    public function getArguments(): array
+    {
+        return [
+            new ReflectionClass($this->controller),
+        ];
     }
 }

@@ -2,33 +2,35 @@
 
 namespace App\Cms\BusinessRules;
 
-use App\Cms\BusinessRules\Exception;
-use App\Cms\BusinessRules\Routing\ActionRuleInterface;
 use ReflectionMethod;
 
-final class ActionRules
+final class ActionRules implements RulesInterface
 {
-    /** @var list<ActionRuleInterface> */
     private array $rules = [];
+    
+    public function __construct(
+        private string $controller,
+        private string $action
+    ) {
+    }
     
     public function addRule(ActionRuleInterface $rule): void
     {
         $this->rules[] = $rule;
     }
     
-    /**
-     * @throws Exception
-     */
-    public function check(string|object $class, string $action): void
+    public function getRules(): array
     {
-        if (!$this->rules) {
-            return;
-        }
-        
-        $reflectionMethod = new ReflectionMethod($class, $action);
-        
-        foreach ($this->rules as $rule) {
-            $rule->check($reflectionMethod);
-        }
+        return [
+            new \App\Cms\BusinessRules\Action\ModifiersRule(),
+            new \App\Cms\BusinessRules\Action\NameRule(),
+        ];
+    }
+    
+    public function getArguments(): array
+    {
+        return [
+            new ReflectionMethod($this->controller, $this->action),
+        ];
     }
 }

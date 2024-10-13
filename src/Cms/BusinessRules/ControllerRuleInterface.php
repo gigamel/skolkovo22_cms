@@ -1,8 +1,7 @@
 <?php declare(strict_types=1);
 
-namespace App\Cms\BusinessRules\Routing;
+namespace App\Cms\BusinessRules;
 
-use App\Cms\BusinessRules\Exception;
 use ReflectionClass;
 
 interface ControllerRuleInterface

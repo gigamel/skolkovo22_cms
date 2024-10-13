@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Cms\BusinessRules\Routing\Action;
+namespace App\Cms\BusinessRules\Action;
 
+use App\Cms\BusinessRules\ActionRuleInterface;
 use App\Cms\BusinessRules\Exception;
-use App\Cms\BusinessRules\Routing\ActionRuleInterface;
 use ReflectionMethod;
 
 final class NameRule implements ActionRuleInterface

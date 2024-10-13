@@ -5,6 +5,8 @@ namespace App;
 use App\Cms\ArgumentsParser;
 use App\Cms\BusinessRules\ActionResultRules;
 use App\Cms\BusinessRules\ActionRules;
+use App\Cms\BusinessRules\RulesChecker;
+use App\Cms\BusinessRules\RulesInterface;
 use App\Cms\BusinessRules\ControllerRules;
 use App\Cms\Core;
 use App\Cms\CoreInterface;
@@ -62,8 +64,8 @@ final class Cms
         $handled = $this->getRouter()->handleClientMessage($clientMessage);
         [$controllerClass, $actionName] = explode('::', $handled);
         
-        $this->checkControllerBusinessRules($controllerClass, $actionName);
-        $this->checkActionBusinessRules($controllerClass, $actionName);
+        $this->checkRules(new ControllerRules($controllerClass));
+        $this->checkRules(new ActionRules($controllerClass, $actionName));
         
         $parser = (new ArgumentsParser($this->core->getContainer(), $clientMessage));
         
@@ -73,7 +75,7 @@ final class Cms
         $actionArguments = $parser->getActionArguments($controller, $actionName);
         $serverMessage = $controller->{$actionName}(...$actionArguments);
         
-        $this->checkActionResultBusinessRules($controllerClass, $actionName, $serverMessage);
+        $this->checkRules(new ActionResultRules($controllerClass, $actionName, $serverMessage));
         
         return $serverMessage;
     }
@@ -98,36 +100,6 @@ final class Cms
         );
     }
     
-    private function checkControllerBusinessRules(string $controller, string $action): void
-    {
-        $controllerRules = new ControllerRules();
-        foreach ($this->getControllerRules() as $rule) {
-            $controllerRules->addRule($rule);
-        }
-        $controllerRules->check($controller);
-    }
-    
-    private function checkActionBusinessRules(string $controller, string $action): void
-    {
-        $actionRules = new ActionRules();
-        foreach ($this->getActionRules() as $rule) {
-            $actionRules->addRule($rule);
-        }
-        $actionRules->check($controller, $action);
-    }
-    
-    private function checkActionResultBusinessRules(
-        string $controller,
-        string $action,
-        mixed $result
-    ): void {
-        $actionResultRules = new ActionResultRules();
-        foreach ($this->getActionResultRules() as $rule) {
-            $actionResultRules->addRule($rule);
-        }
-        $actionResultRules->check($controller, $action, $result);
-    }
-    
     private function registerCommonDependenies(): void
     {
         $this->core->getContainer()->put(\App\Service\Blog\PostRepository::class);
@@ -135,28 +107,8 @@ final class Cms
         $this->core->getContainer()->put(\App\Service\User\UserRepository::class);
     }
     
-    private function getControllerRules(): array
+    private function checkRules(RulesInterface $rules): void
     {
-        return [
-            new \App\Cms\BusinessRules\Routing\Controller\NameRule(),
-            new \App\Cms\BusinessRules\Routing\Controller\ModifiersRule(),
-            new \App\Cms\BusinessRules\Routing\Controller\InstanceofRule(),
-            new \App\Cms\BusinessRules\Routing\Controller\ConstructorRule(),
-        ];
-    }
-    
-    private function getActionRules(): array
-    {
-        return [
-            new \App\Cms\BusinessRules\Routing\Action\ModifiersRule(),
-            new \App\Cms\BusinessRules\Routing\Action\NameRule(),
-        ];
-    }
-    
-    private function getActionResultRules(): array
-    {
-        return [
-            new \App\Cms\BusinessRules\Routing\ActionResult\ServerMessageRule(),
-        ];
+        (new RulesChecker())->check($rules);
     }
 }
