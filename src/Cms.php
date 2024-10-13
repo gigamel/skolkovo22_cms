@@ -14,12 +14,9 @@ use App\Common\Http\Router;
 use App\Common\Http\Routing\RouterInterface;
 use App\Common\Http\Protocol\ClientMessageInterface;
 use App\Common\Http\Protocol\ServerMessageInterface;
-use App\Service\Blog\PostRepository;
-use App\Service\Catalog\ProductRepository;
-use App\Service\User\UserRepository;
 use Throwable;
 
-final class CmsApplication
+final class Cms
 {
     private bool $isRunning = false;
     
@@ -75,7 +72,9 @@ final class CmsApplication
         
         $actionArguments = $parser->getActionArguments($controller, $actionName);
         $serverMessage = $controller->{$actionName}(...$actionArguments);
+        
         $this->checkActionResultBusinessRules($controllerClass, $actionName, $serverMessage);
+        
         return $serverMessage;
     }
     
@@ -131,9 +130,9 @@ final class CmsApplication
     
     private function registerCommonDependenies(): void
     {
-        $this->core->getContainer()->put(UserRepository::class);
-        $this->core->getContainer()->put(ProductRepository::class);
-        $this->core->getContainer()->put(PostRepository::class);
+        $this->core->getContainer()->put(\App\Service\Blog\PostRepository::class);
+        $this->core->getContainer()->put(\App\Service\Catalog\ProductRepository::class);
+        $this->core->getContainer()->put(\App\Service\User\UserRepository::class);
     }
     
     private function getControllerRules(): array

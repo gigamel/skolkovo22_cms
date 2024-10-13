@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\CmsApplication;
+use App\Cms;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-(new CmsApplication())->run();
+(new Cms())->run();
