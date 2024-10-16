@@ -1,3 +1,5 @@
+<?= \widget('\\App\\Widget\\Magazine\\MiniCart')->render('default.php'); ?>
+
 <nav>
   <a href="/">Home</a>
   <a href="/contacts/">Contacts</a>

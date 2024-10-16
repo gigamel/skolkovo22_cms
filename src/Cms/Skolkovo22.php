@@ -59,7 +59,7 @@ final class Skolkovo22
     {        
         $this->providers[] = new \App\Provider\CommonProvider();
         $this->providers[] = new \App\Provider\BlogProvider();
-        $this->providers[] = new \App\Provider\CatalogProvider();
+        $this->providers[] = new \App\Provider\MagazineProvider();
         $this->providers[] = new \App\Provider\UserProvider();
         
         foreach ($this->providers as $provider) {

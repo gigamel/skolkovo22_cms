@@ -9,11 +9,19 @@ use Exception;
 
 final class Container implements ContainerInterface
 {
+    private static ContainerInterface $instance;
+    
     private FrameworkContainerInterface $container;
     
     public function __construct(?FrameworkContainerInterface $container = null)
     {
         $this->container = $container ?? new FrameworkContainer();
+        self::$instance = $this;
+    }
+    
+    public static function getInstance(): self
+    {
+        return self::$instance;
     }
     
     public function importArguments(string $source): void

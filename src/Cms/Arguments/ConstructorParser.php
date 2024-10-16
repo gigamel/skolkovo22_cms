@@ -10,51 +10,29 @@ use ReflectionException;
 use ReflectionMethod;
 use ReflectionParameter;
 
-class ConstructorParser implements ConstructorParserInterface
+class ConstructorParser extends DIConstructorParser
 {
     public function __construct(
         protected ContainerInterface $container,
         protected ClientMessageInterface $clientMessage
     ) {
-    }
-    
-    public function getArguments(string $class): array
-    {
-        $reflectionClass = new ReflectionClass($class);
-        if (!$constructor = $reflectionClass->getConstructor()) {
-            return [];
-        }
-        
-        $this->checkModifiers($constructor);
-        
-        $arguments = [];
-        foreach ($constructor->getParameters() as $reflectionParameter) {
-            $arguments[] = $this->parseArgument($reflectionParameter);
-        }
-        
-        return $arguments;
-    }
-    
-    protected function checkModifiers(ReflectionMethod $reflectionMethod): void
-    {
-        if ($reflectionMethod->isPublic() && !$reflectionMethod->isAbstract()) {
-            return;
-        }
-        
-        throw new Exception('Failed parse arguments from action');
+        parent::__construct($container);
     }
     
     protected function parseArgument(ReflectionParameter $reflectionParameter): mixed
     {
-        $type = $reflectionParameter->getType()->getName();
-        if ($this->container->has($type)) {
-            $argument = $this->container->get($type);
-        } elseif (is_a($type, ClientMessageInterface::class, true)) {
-            $argument = $this->clientMessage;
-        } elseif ($reflectionParameter->isDefaultValueAvailable()) {
-            $argument = $reflectionParameter->getDefaultValue();
+        $argument = parent::parseArgument($reflectionParameter);
+        if (null === $argument) {
+            if (
+                is_a(
+                    $reflectionParameter->getType()->getName(),
+                    ClientMessageInterface::class,
+                    true
+                )
+            ) {
+                $argument = $this->clientMessage;
+            }
         }
-        
-        return $argument ?? null;
+        return $argument;
     }
 }

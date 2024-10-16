@@ -6,6 +6,8 @@ use Exception;
 
 interface ContainerInterface
 {
+    public static function getInstance(): self;
+    
     public function importArguments(string $source): void;
     
     /**
