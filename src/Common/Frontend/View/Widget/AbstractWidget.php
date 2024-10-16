@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Cms\Frontend\Widget;
+namespace App\Common\Frontend\View\Widget;
 
 abstract class AbstractWidget implements WidgetInterface
 {

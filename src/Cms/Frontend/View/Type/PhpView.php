@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\Cms\Frontend\View;
+namespace App\Cms\Frontend\View\Type;
+
+use App\Cms\Frontend\View\ViewInterface;
 
 final class PhpView implements ViewInterface
 {

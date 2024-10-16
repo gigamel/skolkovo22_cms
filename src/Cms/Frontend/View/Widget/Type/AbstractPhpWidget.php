@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Cms\Frontend\Widget;
+namespace App\Cms\Frontend\View\Widget\Type;
 
-use App\Cms\Frontend\View\PhpView;
+use App\Cms\Frontend\View\Widget\AbstractWidget;
+use App\Cms\Frontend\View\Type\PhpView;
 
 abstract class AbstractPhpWidget extends AbstractWidget
 {

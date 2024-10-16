@@ -1,8 +1,8 @@
 <?php
 
-use App\Cms\Frontend\View\PhpView;
-use App\Cms\Frontend\Widget\StubWidget;
-use App\Cms\Frontend\Widget\WidgetInterface;
+use App\Cms\Frontend\View\Type\PhpView;
+use App\Cms\Frontend\View\Widget\Type\StubWidget;
+use App\Cms\Frontend\View\Widget\WidgetInterface;
 
 if (!function_exists('widget')) {
     function widget(string $name): WidgetInterface

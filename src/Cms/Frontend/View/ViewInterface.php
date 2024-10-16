@@ -2,7 +2,8 @@
 
 namespace App\Cms\Frontend\View;
 
-interface ViewInterface
+use App\Common\Frontend\View\ViewInterface as CommonViewInterface;
+
+interface ViewInterface extends CommonViewInterface
 {
-    public function render(string $view, array $params = []): string;
 }
