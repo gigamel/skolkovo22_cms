@@ -2,9 +2,26 @@
 
 namespace App\Cms\DI;
 
-use App\Common\DI\ContainerInterface as FrameworkContainerInterface;
+use Exception;
 
-interface ContainerInterface extends FrameworkContainerInterface
+interface ContainerInterface
 {
     public function importArguments(string $source): void;
+    
+    /**
+     * @throws Exception
+     */
+    public function put(string $id, mixed $dependency = null): void;
+
+    /**
+     * @throws Exception
+     */
+    public function get(string $id): mixed;
+    
+    public function has(string $id): bool;
+    
+    /**
+     * @throws Exception
+     */
+    public function newInstance(string $class, array $arguments = []): object;
 }

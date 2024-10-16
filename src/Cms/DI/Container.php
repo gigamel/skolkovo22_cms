@@ -3,74 +3,62 @@
 namespace App\Cms\DI;
 
 use App\Common\DI\Container as FrameworkContainer;
-use ReflectionClass;
+use App\Common\DI\ContainerInterface as FrameworkContainerInterface;
+use App\Common\DI\Exception as FrameworkContainerException;
+use Exception;
 
-final class Container extends FrameworkContainer implements ContainerInterface
+final class Container implements ContainerInterface
 {
-    private array $arguments = [];
+    private FrameworkContainerInterface $container;
+    
+    public function __construct(?FrameworkContainerInterface $container = null)
+    {
+        $this->container = $container ?? new FrameworkContainer();
+    }
     
     public function importArguments(string $source): void
     {
-        if (!file_exists($source)) {
-            return;
-        }
-        
-        $arguments = require_once($source);
-        if (!is_array($arguments)) {
-            return;
-        }
-        
-        $this->arguments = array_replace_recursive(
-            $this->arguments,
-            $arguments
-        );
+        $this->container->importArguments($source);
     }
     
     /**
-     * @inheritDoc
+     * @throws Exception
      */
     public function put(string $id, mixed $dependency = null): void
     {
-        if (null === $dependency) {
-            if (!class_exists($id)) {
-                throw new Exception(
-                    'ID should be type of class when Dependency NULL',
-                );
-            }
-            
-            $dependency = $id;
+        try {
+            $this->container->put($id, $dependency);
+        } catch (FrameworkContainerException $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
         }
-
-        parent::put($id, $dependency);
     }
-    
+
     /**
-     * @inheritDoc
+     * @throws Exception
      */
     public function get(string $id): mixed
     {
-        $dependency = parent::get($id);
-        if (!is_string($dependency)) {
-            return $dependency;
+        try {
+            return $this->container->get($id);
+        } catch (FrameworkContainerException $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
         }
-        
-        $reflectionClass = new ReflectionClass($dependency);
-        if (!$constructor = $reflectionClass->getConstructor()) {
-            return $this->dependencies[$id] = $reflectionClass->newInstance();
+    }
+    
+    public function has(string $id): bool
+    {
+        return $this->container->has($id);
+    }
+    
+    /**
+     * @throws Exception
+     */
+    public function newInstance(string $class, array $arguments = []): object
+    {
+        try {
+            return $this->container->newInstance($class, $arguments);
+        } catch (FrameworkContainerException $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
         }
-        
-        $arguments = [];
-        foreach ($constructor->getParameters() as $reflectionParameter) {
-            $type = $reflectionParameter->getType()->getName();
-            if ($this->has($type)) {
-                $arguments[] = $this->get($type);
-            } elseif (array_key_exists($reflectionParameter->getName(), $this->arguments[$id] ?? [])) {
-                $arguments[] = $this->arguments[$id][$reflectionParameter->getName()];
-            } elseif ($reflectionParameter->isDefaultValueAvailable()) {
-                $arguments[] = $reflectionParameter->getDefaultValue();
-            }
-        }
-        
-        return $this->dependencies[$id] = $reflectionClass->newInstanceArgs($arguments);
     }
 }

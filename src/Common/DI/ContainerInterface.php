@@ -2,10 +2,10 @@
 
 namespace App\Common\DI;
 
-use Exception;
-
 interface ContainerInterface
 {
+    public function importArguments(string $source): void;
+    
     /**
      * @throws Exception
      */
@@ -17,4 +17,9 @@ interface ContainerInterface
     public function get(string $id): mixed;
     
     public function has(string $id): bool;
+    
+    /**
+     * @throws Exception
+     */
+    public function newInstance(string $class, array $arguments = []): object;
 }
