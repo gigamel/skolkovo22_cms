@@ -17,6 +17,7 @@ class Route implements RouteInterface
      */
     public function __construct(
         protected readonly string $rule,
+        protected readonly string $controller,
         protected readonly string $action,
         array $methods = ClientMessageInterface::HTTP_METHODS
     ) {
@@ -39,6 +40,11 @@ class Route implements RouteInterface
     public function getRule(): string
     {
         return $this->rule;
+    }
+    
+    public function getController(): string
+    {
+        return $this->controller;
     }
 
     public function getAction(): string

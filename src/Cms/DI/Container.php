@@ -50,7 +50,7 @@ final class Container extends FrameworkContainer implements ContainerInterface
     public function get(string $id): mixed
     {
         $dependency = parent::get($id);
-        if (!is_string($dependency) && !class_exists($dependency)) {
+        if (!is_string($dependency)) {
             return $dependency;
         }
         
@@ -62,10 +62,10 @@ final class Container extends FrameworkContainer implements ContainerInterface
         $arguments = [];
         foreach ($constructor->getParameters() as $reflectionParameter) {
             $type = $reflectionParameter->getType()->getName();
-            if (is_string($type) && $this->has($type)) {
+            if ($this->has($type)) {
                 $arguments[] = $this->get($type);
-            } elseif (array_key_exists($reflectionParameter->getName(), $this->arguments[$type] ?? [])) {
-                $arguments[] = $this->arguments[$type][$reflectionParameter->getName()];
+            } elseif (array_key_exists($reflectionParameter->getName(), $this->arguments[$id] ?? [])) {
+                $arguments[] = $this->arguments[$id][$reflectionParameter->getName()];
             } elseif ($reflectionParameter->isDefaultValueAvailable()) {
                 $arguments[] = $reflectionParameter->getDefaultValue();
             }

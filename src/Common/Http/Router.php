@@ -6,6 +6,7 @@ use App\Common\Http\Protocol\ClientMessageInterface;
 use App\Common\Http\Protocol\ServerMessageInterface;
 use App\Common\Http\Routing\RouterInterface;
 use App\Common\Http\Routing\RoutesCollectionInterface;
+use App\Common\Http\Routing\RouteInterface;
 
 class Router implements RouterInterface
 {
@@ -23,7 +24,7 @@ class Router implements RouterInterface
     /**
      * @throws HttpException
      */
-    public function handleClientMessage(ClientMessageInterface $clientMessage): string
+    public function handleClientMessage(ClientMessageInterface $clientMessage): RouteInterface
     {
         foreach ($this->collection->getCollection() as $name => $route) {
             if (!in_array($clientMessage->getMethod(), $route->getMethods(), true)) {
@@ -43,7 +44,7 @@ class Router implements RouterInterface
                     }
                 }
                 
-                return $route->getAction();
+                return $route;
             }
         }
         

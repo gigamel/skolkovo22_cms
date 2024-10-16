@@ -1,17 +1,16 @@
 <?php
 
-use App\Http\Routing\RouterInterface;
-use App\Storage\ConnectionInterface;
+use App\Common\Http\Router;
+use App\Common\Http\RoutesCollection;
+use App\Common\Http\Routing\RoutesCollectionInterface;
+use App\Common\Http\Routing\RouterInterface;
 
 return [
-    ConnectionInterface::class => [
-        'dsn' => 'mysql',
-        'username' => 'admin',
-        'password' => '123',
-    ],
+    RoutesCollectionInterface::class => [],
     RouterInterface::class => [
         'segments' => [
-            'id' => 'd+',
+            'id' => '[1-9]+[0-9]?',
+            'page' => '[1-9]+[0-9]?',
         ],
     ],
 ];

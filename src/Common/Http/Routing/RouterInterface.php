@@ -10,7 +10,7 @@ interface RouterInterface
     /**
      * @throws HttpException
      */
-    public function handleClientMessage(ClientMessageInterface $clientMessage): string;
+    public function handleClientMessage(ClientMessageInterface $clientMessage): RouteInterface;
     
     public function setSegment(string $segment, string $regEx): void;
 }

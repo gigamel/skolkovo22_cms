@@ -6,6 +6,8 @@ interface RouteInterface
 {
     public function getRule(): string;
     
+    public function getController(): string;
+    
     public function getAction(): string;
 
     /**
