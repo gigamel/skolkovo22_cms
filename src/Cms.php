@@ -63,8 +63,8 @@ final class Cms
             $provider->setup($this->core->getContainer());
         }
         
-        foreach (require_once(__DIR__ . '/../config/routes.php') as $route) {
-            $this->core->getContainer()->get(RoutesCollectionInterface::class)->set(...array_values($route));
+        foreach (require_once(__DIR__ . '/../config/routes.php') as $name => $route) {
+            $this->core->getContainer()->get(RoutesCollectionInterface::class)->set($name, $route);
         }
         
         $clientMessage = new ClientMessage();
