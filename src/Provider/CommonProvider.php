@@ -2,6 +2,8 @@
 
 namespace App\Provider;
 
+use App\Cms\BusinessRules\RulesChecker;
+use App\Cms\BusinessRules\RulesCheckerInterface;
 use App\Cms\DI\ContainerInterface;
 use App\Cms\DI\ProviderInterface;
 use App\Common\Http\Router;
@@ -17,5 +19,6 @@ final class CommonProvider implements ProviderInterface
         
         $container->put(RoutesCollectionInterface::class, RoutesCollection::class);
         $container->put(RouterInterface::class, Router::class);
+        $container->put(RulesCheckerInterface::class, RulesChecker::class);
     }
 }

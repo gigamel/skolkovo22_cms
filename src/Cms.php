@@ -6,7 +6,7 @@ use App\Cms\Arguments\ActionParser;
 use App\Cms\Arguments\ConstructorParser;
 use App\Cms\BusinessRules\ActionResultRules;
 use App\Cms\BusinessRules\ActionRules;
-use App\Cms\BusinessRules\RulesChecker;
+use App\Cms\BusinessRules\RulesCheckerInterface;
 use App\Cms\BusinessRules\RulesInterface;
 use App\Cms\BusinessRules\ControllerRules;
 use App\Cms\Core;
@@ -52,54 +52,31 @@ final class Cms
         }
     }
     
-    public function registerProvider(ProviderInterface $provider): self
-    {
-        $this->providers[] = $provider;
-        return $this;
-    }
-    
-    public function addRoute(string $name, RouteInterface $route): void
-    {
-        $this->core->getContainer()->get(RoutesCollectionInterface::class)->set($name, $route);
-    }
-    
     private function runCms(): void
     {
-        $this
-            ->registerProvider(new \App\Provider\CommonProvider())
-            ->registerProvider(new \App\Provider\BlogProvider())
-            ->registerProvider(new \App\Provider\CatalogProvider())
-            ->registerProvider(new \App\Provider\UserProvider());
+        $this->providers[] = new \App\Provider\CommonProvider();
+        $this->providers[] = new \App\Provider\BlogProvider();
+        $this->providers[] = new \App\Provider\CatalogProvider();
+        $this->providers[] = new \App\Provider\UserProvider();
         
-        $this->setupProviders();
-        $this->setupRoutes();
+        foreach ($this->providers as $provider) {
+            $provider->setup($this->core->getContainer());
+        }
+        
+        foreach (require_once(__DIR__ . '/../config/routes.php') as $route) {
+            $this->core->getContainer()->get(RoutesCollectionInterface::class)->set(...array_values($route));
+        }
         
         $clientMessage = new ClientMessage();
         
-        $route = $this->getRoute($clientMessage);
+        $route = $this->core->getContainer()->get(RouterInterface::class)->handleClientMessage($clientMessage);
         
-        $this->checkRoute($route);
+        $controllerRules = new ControllerRules($route->getController());
+        $this->core->getContainer()->get(RulesCheckerInterface::class)->check($controllerRules);
         
-        $serverMessage = $this->getServerMessage($clientMessage, $route);
+        $actionRules = new ActionRules($route->getController(), $route->getAction());
+        $this->core->getContainer()->get(RulesCheckerInterface::class)->check($actionRules);
         
-        $this->serverSendMessage($serverMessage);
-    }
-    
-    private function getRoute(ClientMessageInterface $clientMessage): RouteInterface
-    {
-        return $this->core->getContainer()->get(RouterInterface::class)->handleClientMessage($clientMessage);
-    }
-    
-    private function checkRoute(RouteInterface $route): void
-    {
-        (new RulesChecker())->check(new ControllerRules($route->getController()));
-        (new RulesChecker())->check(new ActionRules($route->getController(), $route->getAction()));
-    }
-    
-    private function getServerMessage(
-        ClientMessageInterface $clientMessage,
-        RouteInterface $route
-    ): ServerMessageInterface {
         $controllerArguments = (new ConstructorParser(
             $this->core->getContainer(),
             $clientMessage
@@ -113,25 +90,8 @@ final class Cms
             $clientMessage
         ))->getArguments($route->getController(), $route->getAction());
         
-        return $controller->{$route->getAction()}(...$actionArguments);
-    }
-    
-    private function serverSendMessage(ServerMessageInterface $message): void
-    {
-        (new Server())->sendMessage($message);
-    }
-    
-    private function setupProviders(): void
-    {
-        foreach ($this->providers as $provider) {
-            $provider->setup($this->core->getContainer());
-        }
-    }
-    
-    private function setupRoutes(): void
-    {
-        foreach (require_once(__DIR__ . '/../config/routes.php') as $route) {
-            $this->addRoute(...array_values($route));
-        }
+        $serverMessage = $controller->{$route->getAction()}(...$actionArguments);
+        
+        (new Server())->sendMessage($serverMessage);
     }
 }
