@@ -17,7 +17,7 @@ final class PostRepository
     /**
      * @return list<Post>
      */
-    public function getList(int $limit = 2): array
+    public function getList(int $limit = 3): array
     {
         shuffle($this->posts);
         return array_map(

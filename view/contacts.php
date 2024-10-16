@@ -1,24 +1,31 @@
-<nav>
-  <a href="/">Home</a>
-  <a href="/contacts/">Contacts</a>
-</nav>
+<?php require_once __DIR__ . '/tmp/header.php'; ?>
 
-<hr/>
+<div class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>Contacts</h1>
 
-<pre><?php var_dump($clientMessage); ?></pre>
+        <form action="" method="POST" autocomplete="off">
+          <div class="mb-3">
+            <input type="text" class="form-control" name="first_name" placeholder="First name" />
+          </div>
+          <div class="mb-3">
+            <input type="email" class="form-control" name="email" placeholder="E-mail" />
+          </div>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+        
+        <hr />
+        
+          <pre><?php var_dump($clientMessage); ?></pre>
+          
+        <hr />
 
-<h1>Contacts</h1>
-
-<form action="" method="POST" autocomplete="off">
-  <div>
-    <input type="text" name="first_name" placeholder="First name" />
+        <p><em>&copy; Author Aleksey Sh.</em></p>
+      </div>
+    </div>
   </div>
-  <div>
-    <input type="email" name="email" placeholder="E-mail" />
-  </div>
-  <button type="submit">Send</button>
-</form>
+</div>
 
-<p>
-  <em>&copy; Author Aleksey Sh.</em>
-</p>
+<?php require_once __DIR__ . '/tmp/footer.php'; ?>
