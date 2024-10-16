@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Cms\Http\Controller\AbstractController;
 use App\Common\Http\HttpException;
 use App\Common\Http\Protocol\ServerMessageInterface;
+use App\Common\Http\ServerMessage;
 use App\Service\Blog\PostRepository;
 
-final class BlogController extends AbstractController
+final class BlogController
 {
     public function __construct(
         private PostRepository $repository
@@ -17,13 +17,18 @@ final class BlogController extends AbstractController
     /**
      * @throws HttpException
      */
-    public function home(): ServerMessageInterface
+    public function posts(int $page = 1): ServerMessageInterface
     {
-        return $this->render(
-            __DIR__ . '/../../view/home.php',
-            [
-                'posts' => $this->repository->getList(),
-            ]
+        return new ServerMessage(
+            render(
+                'posts.php',
+                [
+                    'posts' => $this->repository->getList(),
+                    'all' => $this->repository->getCount(),
+                    'limit' => 3,
+                    'page' => $page,
+                ]
+            )
         );
     }
     
@@ -34,11 +39,13 @@ final class BlogController extends AbstractController
             throw new HttpException('Post Not Found', 404);
         }
         
-        return $this->render(
-            __DIR__ . '/../../view/post.php',
-            [
-                'post' => $post,
-            ]
+        return new ServerMessage(
+            render(
+                'post.php',
+                [
+                    'post' => $post,
+                ]
+            )
         );
     }
 }

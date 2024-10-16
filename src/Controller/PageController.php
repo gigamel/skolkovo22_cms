@@ -2,19 +2,21 @@
 
 namespace App\Controller;
 
-use App\Cms\Http\Controller\AbstractController;
 use App\Common\Http\Protocol\ClientMessageInterface;
 use App\Common\Http\Protocol\ServerMessageInterface;
+use App\Common\Http\ServerMessage;
 
-final class PageController extends AbstractController
+final class PageController
 {
     public function contacts(ClientMessageInterface $clientMessage): ServerMessageInterface
     {
-        return $this->render(
-            __DIR__ . '/../../view/contacts.php',
-            [
-                'clientMessage' => $clientMessage,
-            ]
+        return new ServerMessage(
+            render(
+                'contacts.php',
+                [
+                    'clientMessage' => $clientMessage,
+                ]
+            )
         );
     }
 }

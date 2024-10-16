@@ -18,6 +18,14 @@
   <hr />
   <?php endforeach; ?>
 
+  <?php
+  echo \widget('\\App\\Widget\\Page\\Pagination')
+      ->render(
+          'default.php',
+          ['page' => $page, 'all' => $all, 'limit' => $limit]
+      );
+  ?>
+
 <?php else: ?>
 
 <p>Posts list is empty</p>

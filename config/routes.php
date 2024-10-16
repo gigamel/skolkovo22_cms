@@ -4,11 +4,19 @@ use App\Common\Http\Route;
 
 return [
     [
-        'home',
+        'blog_list',
         new Route(
             '/',
             '\App\Controller\BlogController',
-            'home'
+            'posts'
+        )
+    ],
+    [
+        'blog_list_page',
+        new Route(
+            '/blog/page/{page}',
+            '\App\Controller\BlogController',
+            'posts'
         )
     ],
     [

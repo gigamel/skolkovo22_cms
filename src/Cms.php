@@ -53,7 +53,7 @@ final class Cms
     }
     
     private function runCms(): void
-    {
+    {        
         $this->providers[] = new \App\Provider\CommonProvider();
         $this->providers[] = new \App\Provider\BlogProvider();
         $this->providers[] = new \App\Provider\CatalogProvider();

@@ -3,6 +3,9 @@
     "description": "Skolkovo22 CMS",
     "type": "project",
     "autoload": {
+        "files": [
+            "utils/frontend.php"
+        ],
         "psr-4": {
             "App\\": "src/"
         }

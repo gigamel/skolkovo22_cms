@@ -12,6 +12,8 @@ final class PostRepository
         ['id' => 834, 'title' => 'Cool spring', 'summary' => 'Very nice day. I want to eat and I want to...'],
     ];
     
+    private ?int $count = null;
+    
     /**
      * @return list<Post>
      */
@@ -28,6 +30,15 @@ final class PostRepository
             },
             array_slice($this->posts, 0, $limit)
         );
+    }
+    
+    public function getCount(): int
+    {
+        if (null === $this->count) {
+            $this->count = count($this->posts);
+        }
+        
+        return $this->count;
     }
     
     public function getById(int $id): ?Post
