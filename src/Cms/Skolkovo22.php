@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App;
+namespace App\Cms;
 
 use App\Cms\Arguments\ActionParser;
 use App\Cms\Arguments\ConstructorParser;
@@ -9,6 +9,7 @@ use App\Cms\BusinessRules\ActionRules;
 use App\Cms\BusinessRules\RulesCheckerInterface;
 use App\Cms\BusinessRules\RulesInterface;
 use App\Cms\BusinessRules\ControllerRules;
+use App\Cms\Config\ProjectInterface;
 use App\Cms\Core;
 use App\Cms\CoreInterface;
 use App\Cms\DI\ProviderInterface;
@@ -21,7 +22,7 @@ use App\Common\Http\Protocol\ClientMessageInterface;
 use App\Common\Http\Protocol\ServerMessageInterface;
 use Throwable;
 
-final class Cms
+final class Skolkovo22
 {
     private bool $isRunning = false;
     
@@ -32,8 +33,10 @@ final class Cms
     /** @var list<ProviderInterface> */
     private array $providers = [];
     
-    public function __construct(?CoreInterface $core = null)
-    {
+    public function __construct(
+        private ProjectInterface $project,
+        ?CoreInterface $core = null
+    ) {
         $this->core = $core ?? new Core();
     }
     
@@ -63,7 +66,7 @@ final class Cms
             $provider->setup($this->core->getContainer());
         }
         
-        foreach (require_once(__DIR__ . '/../config/routes.php') as $name => $route) {
+        foreach (require_once($this->project->getConfigDir() . '/routes.php') as $name => $route) {
             $this->core->getContainer()->get(RoutesCollectionInterface::class)->set($name, $route);
         }
         
