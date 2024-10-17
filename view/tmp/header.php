@@ -39,7 +39,7 @@
             </div>
             <div class="col-6">
               <div class="small-cart pt-5">
-                <?= \widget('\\App\\Widget\\Magazine\\MiniCart')->render('default.php'); ?>
+                <?= widget('\\App\\Module\\Magazine\\Widget\\Cart\\MiniCart')->render('default.php'); ?>
               </div>
             </div>
           </div>

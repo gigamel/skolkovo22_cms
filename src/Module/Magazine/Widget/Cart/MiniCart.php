@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Widget\Magazine;
+namespace App\Module\Magazine\Widget\Cart;
 
 use App\Common\Frontend\View\Widget\Type\AbstractPhpWidget;
-use App\Service\Magazine\CartRepository;
+use App\Module\Magazine\Service\CartRepository;
 
 final class MiniCart extends AbstractPhpWidget
 {
