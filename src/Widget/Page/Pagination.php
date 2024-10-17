@@ -2,7 +2,7 @@
 
 namespace App\Widget\Page;
 
-use App\Cms\Frontend\View\Widget\Type\AbstractPhpWidget;
+use App\Common\Frontend\View\Widget\Type\AbstractPhpWidget;
 
 final class Pagination extends AbstractPhpWidget
 {

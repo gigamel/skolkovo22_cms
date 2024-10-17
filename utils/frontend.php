@@ -1,10 +1,10 @@
 <?php
 
-use App\Cms\Arguments\DIConstructorParser;
-use App\Cms\DI\Container;
-use App\Cms\Frontend\View\Type\PhpView;
-use App\Cms\Frontend\View\Widget\Type\StubWidget;
-use App\Cms\Frontend\View\Widget\WidgetInterface;
+use App\Common\Arguments\DIConstructorParser;
+use App\Common\DI\Container;
+use App\Common\Frontend\View\Type\PhpView;
+use App\Common\Frontend\View\Widget\Type\StubWidget;
+use App\Common\Frontend\View\Widget\WidgetInterface;
 
 if (!function_exists('widget')) {
     function widget(string $name): WidgetInterface

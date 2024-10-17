@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Common\Http\HttpException;
-use App\Common\Http\Protocol\ServerMessageInterface;
-use App\Common\Http\ServerMessage;
-use App\Service\Blog\PostRepository;
+use App\Module\Blog\Service\PostRepository;
+use Skolkovo22\Http\HttpException;
+use Skolkovo22\Http\Protocol\ServerMessageInterface;
+use Skolkovo22\Http\ServerMessage;
 
 final class BlogController
 {

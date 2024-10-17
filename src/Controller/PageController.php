@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Common\Http\Protocol\ClientMessageInterface;
-use App\Common\Http\Protocol\ServerMessageInterface;
-use App\Common\Http\ServerMessage;
+use Skolkovo22\Http\Protocol\ClientMessageInterface;
+use Skolkovo22\Http\Protocol\ServerMessageInterface;
+use Skolkovo22\Http\ServerMessage;
 
 final class PageController
 {

@@ -2,7 +2,8 @@
 
 namespace App\Common\Frontend\View;
 
-interface ViewInterface
+use Skolkovo22\Frontend\View\ViewInterface as CommonViewInterface;
+
+interface ViewInterface extends CommonViewInterface
 {
-    public function render(string $view, array $vars = []): string;
 }

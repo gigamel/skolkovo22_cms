@@ -2,7 +2,7 @@
 
 namespace App\Widget\Magazine;
 
-use App\Cms\Frontend\View\Widget\Type\AbstractPhpWidget;
+use App\Common\Frontend\View\Widget\Type\AbstractPhpWidget;
 use App\Service\Magazine\CartRepository;
 
 final class MiniCart extends AbstractPhpWidget

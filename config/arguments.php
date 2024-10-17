@@ -1,9 +1,9 @@
 <?php
 
-use App\Common\Http\Router;
-use App\Common\Http\RoutesCollection;
-use App\Common\Http\Routing\RoutesCollectionInterface;
-use App\Common\Http\Routing\RouterInterface;
+use Skolkovo22\Http\Router;
+use Skolkovo22\Http\RoutesCollection;
+use Skolkovo22\Http\Routing\RoutesCollectionInterface;
+use Skolkovo22\Http\Routing\RouterInterface;
 
 return [
     RoutesCollectionInterface::class => [],

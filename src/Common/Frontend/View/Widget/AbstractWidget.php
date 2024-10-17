@@ -2,10 +2,8 @@
 
 namespace App\Common\Frontend\View\Widget;
 
-abstract class AbstractWidget implements WidgetInterface
+use Skolkovo22\Frontend\View\Widget\AbstractWidget as CommonAbstractWidget;
+
+abstract class AbstractWidget extends CommonAbstractWidget implements WidgetInterface
 {
-    public function __call(string $name, array $arguments): mixed
-    {
-        return $this;
-    }
 }

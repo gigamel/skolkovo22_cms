@@ -2,8 +2,8 @@
 
 namespace App\Common\Frontend\View\Widget;
 
-use App\Common\Frontend\View\ViewInterface;
+use Skolkovo22\Frontend\View\Widget\WidgetInterface as CommonWidgetInteface;
 
-interface WidgetInterface extends ViewInterface
+interface WidgetInterface extends CommonWidgetInteface
 {
 }
