@@ -16,7 +16,7 @@ final class Container implements ContainerInterface
     public function __construct(?FrameworkContainerInterface $container = null)
     {
         $this->container = $container ?? new FrameworkContainer();
-        self::$instance = $this;
+        self::$instance ??= $this;
     }
     
     public static function getInstance(): self
