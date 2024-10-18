@@ -14,6 +14,8 @@ use App\Common\Core;
 use App\Common\CoreInterface;
 use App\Common\DI\ProviderInterface;
 use App\Common\Http\Server;
+use App\Common\Config\ProviderImporter;
+use App\Common\Config\RoutesImporter;
 use Skolkovo22\Http\ClientMessage;
 use Skolkovo22\Http\Routing\RoutesCollectionInterface;
 use Skolkovo22\Http\Routing\RouteInterface;
@@ -62,21 +64,14 @@ final class Cms
     
     private function runCms(): void
     {
-        if (!class_exists($this->provider) || !is_subclass_of($this->provider, ProviderInterface::class)) {
+        if (!$this->isCorrectProviderInterface($this->provider)) {
             throw new RuntimeException('Common provider does not exists.');
         }
         
         $this->core->getContainer()->newInstance($this->provider)->setup($this->core->getContainer());
         
-        foreach (require_once($this->project->getConfigDir() . '/modules.php') as $provider) {
-            if (class_exists($provider) && is_subclass_of($provider, ProviderInterface::class)) {
-                (new $provider())->setup($this->core->getContainer());
-            }
-        }
-        
-        foreach (require_once($this->project->getConfigDir() . '/routes.php') as $name => $route) {
-            $this->core->getContainer()->get(RoutesCollectionInterface::class)->set($name, $route);
-        }
+        (new ProviderImporter($this->project))->import($this->core->getContainer());
+        (new RoutesImporter($this->project))->import($this->core->getContainer()->get(RoutesCollectionInterface::class));
         
         $clientMessage = new ClientMessage();
         
@@ -114,5 +109,10 @@ final class Cms
     private function checkRules(RulesInterface $rules): void
     {
         $this->core->getContainer()->get(RulesCheckerInterface::class)->check($rules);
+    }
+    
+    private function isCorrectProviderInterface(string $class): bool
+    {
+        return class_exists($class) && is_subclass_of($class, ProviderInterface::class);
     }
 }
