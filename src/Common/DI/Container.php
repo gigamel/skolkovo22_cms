@@ -19,7 +19,7 @@ final class Container implements ContainerInterface
         self::$instance ??= $this;
     }
     
-    public static function getInstance(): self
+    public static function getInstance(): ContainerInterface
     {
         return self::$instance;
     }
