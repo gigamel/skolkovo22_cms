@@ -11,7 +11,7 @@ final class PageController
     public function contacts(ClientMessageInterface $clientMessage): ServerMessageInterface
     {
         return new ServerMessage(
-            render(
+            theme(
                 'contacts.php',
                 [
                     'clientMessage' => $clientMessage,

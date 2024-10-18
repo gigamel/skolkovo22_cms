@@ -10,6 +10,8 @@ final class PostRepository
         ['id' => 99, 'title' => 'Output files', 'summary' => 'Let\'s find different funcs.'],
         ['id' => 73, 'title' => 'Hackers', 'summary' => 'Insert two lines for security your PC'],
         ['id' => 834, 'title' => 'Cool spring', 'summary' => 'Very nice day. I want to eat and I want to...'],
+        ['id' => 1024, 'title' => 'Cool winter', 'summary' => 'Some text...'],
+        ['id' => 2048, 'title' => 'Last post', 'summary' => 'Good bye!'],
     ];
     
     private ?int $count = null;
@@ -17,9 +19,8 @@ final class PostRepository
     /**
      * @return list<Post>
      */
-    public function getList(int $limit = 3): array
+    public function getList(int $limit = 3, int $offset = 1): array
     {
-        shuffle($this->posts);
         return array_map(
             static function (array $post): Post {
                 $entity = new Post();
@@ -28,7 +29,7 @@ final class PostRepository
                 $entity->summary = $post['summary'];
                 return $entity;
             },
-            array_slice($this->posts, 0, $limit)
+            array_slice($this->posts, ($limit * ($offset - 1)), $limit)
         );
     }
     

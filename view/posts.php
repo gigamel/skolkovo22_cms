@@ -1,5 +1,3 @@
-<?php require_once __DIR__ . '/tmp/header.php'; ?>
-
 <div class="posts">
   <div class="container">
     <div class="row">
@@ -22,7 +20,7 @@
 
       <div class="col-12">
         <hr />
-        <?= \widget('\\App\\Widget\\Page\\Pagination')->render('default.php', ['page' => $page, 'all' => $all, 'limit' => $limit]); ?>
+        <?= widget('\\App\\Widget\\Page\\Pagination')->render('default.php', ['page' => $page, 'all' => $all, 'limit' => $limit]); ?>
       </div>
 
       <?php else: ?>
@@ -33,5 +31,3 @@
     </div>
   </div>
 </div>
-
-<?php require_once __DIR__ . '/tmp/footer.php'; ?>

@@ -20,11 +20,14 @@ use Skolkovo22\Http\Routing\RouteInterface;
 use Skolkovo22\Http\Routing\RouterInterface;
 use Skolkovo22\Http\Protocol\ClientMessageInterface;
 use Skolkovo22\Http\Protocol\ServerMessageInterface;
+use RuntimeException;
 use Throwable;
 
 final class Cms
 {
     private bool $isRunning = false;
+    
+    private readonly string $provider;
     
     private CoreInterface $core;
     
@@ -34,9 +37,11 @@ final class Cms
     
     public function __construct(
         private ProjectInterface $project,
+        ?string $provider = null,
         ?CoreInterface $core = null
     ) {
         $this->core = $core ?? new Core();
+        $this->provider = $provider ?? \App\Common\Provider::class;
         $this->startTime = microtime(true);
     }
     
@@ -57,6 +62,12 @@ final class Cms
     
     private function runCms(): void
     {
+        if (!class_exists($this->provider) || !is_subclass_of($this->provider, ProviderInterface::class)) {
+            throw new RuntimeException('Common provider does not exists.');
+        }
+        
+        $this->core->getContainer()->newInstance($this->provider)->setup($this->core->getContainer());
+        
         foreach (require_once($this->project->getConfigDir() . '/modules.php') as $provider) {
             if (class_exists($provider) && is_subclass_of($provider, ProviderInterface::class)) {
                 (new $provider())->setup($this->core->getContainer());
@@ -72,10 +83,10 @@ final class Cms
         $route = $this->core->getContainer()->get(RouterInterface::class)->handleClientMessage($clientMessage);
         
         $controllerRules = new ControllerRules($route->getController());
-        $this->core->getContainer()->get(RulesCheckerInterface::class)->check($controllerRules);
+        $this->checkRules($controllerRules);
         
         $actionRules = new ActionRules($route->getController(), $route->getAction());
-        $this->core->getContainer()->get(RulesCheckerInterface::class)->check($actionRules);
+        $this->checkRules($actionRules);
         
         $controllerArguments = (new ConstructorParser(
             $this->core->getContainer(),
@@ -98,5 +109,10 @@ final class Cms
         );
         
         (new Server())->sendMessage($serverMessage);
+    }
+    
+    private function checkRules(RulesInterface $rules): void
+    {
+        $this->core->getContainer()->get(RulesCheckerInterface::class)->check($rules);
     }
 }

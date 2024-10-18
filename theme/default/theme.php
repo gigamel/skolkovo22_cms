@@ -1,3 +1,6 @@
+<?php
+$theme->addCss('theme', __DIR__ . '/css/main.css');
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,17 +11,8 @@
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
-    />
-    <style>
-    pre {
-      background-color: #180b1a;
-      color: #77708d;
-      font-size: 12px;
-      overflow-x: auto;
-      border-radius: 5px;
-      padding: 15px;
-    }
-    </style>
+    />      
+    <?= $theme->css('theme'); ?>
   </head>
   <body>
     <div class="app">
@@ -47,3 +41,10 @@
       </div>
       
       <hr/>  
+
+
+      <?= $content; ?>
+
+    </div>
+  </body>
+</html>

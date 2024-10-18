@@ -1,5 +1,3 @@
-<?php require_once __DIR__ . '/tmp/header.php'; ?>
-
 <div class="page">
   <div class="container">
     <div class="row">
@@ -27,5 +25,3 @@
     </div>
   </div>
 </div>
-
-<?php require_once __DIR__ . '/tmp/footer.php'; ?>

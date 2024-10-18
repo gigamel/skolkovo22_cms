@@ -2,7 +2,7 @@
 
 use App\Common\Arguments\DIConstructorParser;
 use App\Common\DI\Container;
-use App\Common\Frontend\View\Type\PhpView;
+use App\Common\Frontend\View\ThemeInterface;
 use App\Common\Frontend\View\Widget\Type\StubWidget;
 use App\Common\Frontend\View\Widget\WidgetInterface;
 
@@ -21,9 +21,9 @@ if (!function_exists('widget')) {
     }
 }
 
-if (!function_exists('render')) {
-    function render(string $view, array $vars = []): string
+if (!function_exists('theme')) {
+    function theme(string $view, array $vars = []): string
     {
-        return (new PhpView(__DIR__ . '/../view'))->render($view, $vars);
+        return Container::getInstance()->get(ThemeInterface::class)->render($view, $vars);
     }
 }

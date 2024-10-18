@@ -19,11 +19,16 @@ final class BlogController
      */
     public function posts(int $page = 1): ServerMessageInterface
     {
+        $posts = $this->repository->getList(3, $page);
+        if (!$posts) {
+            return new ServerMessage('Posts Not Found', 404);
+        }
+        
         return new ServerMessage(
-            render(
+            theme(
                 'posts.php',
                 [
-                    'posts' => $this->repository->getList(),
+                    'posts' => $posts,
                     'all' => $this->repository->getCount(),
                     'limit' => 3,
                     'page' => $page,
@@ -40,7 +45,7 @@ final class BlogController
         }
         
         return new ServerMessage(
-            render(
+            theme(
                 'post.php',
                 [
                     'post' => $post,
