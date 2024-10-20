@@ -40,8 +40,7 @@ $theme->addCss('theme', __DIR__ . '/css/main.css');
         </div>
       </div>
       
-      <hr/>  
-
+      <hr/>
 
       <?= $content; ?>
 
