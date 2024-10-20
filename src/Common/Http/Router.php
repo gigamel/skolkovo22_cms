@@ -3,9 +3,9 @@
 namespace App\Common\Http;
 
 use App\Common\Http\Routing\RouterInterface;
-use Skolkovo22\Http\Protocol\ClientMessageInterface;
-use Skolkovo22\Http\Router;
-use Skolkovo22\Http\RouterInterface;
+use Sklkv22\Http\Protocol\ClientMessageInterface;
+use Sklkv22\Http\Router;
+use Sklkv22\Http\RouterInterface;
 
 class Router implements RouterInterface
 {

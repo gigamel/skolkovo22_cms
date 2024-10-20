@@ -16,12 +16,12 @@ use App\Common\DI\ProviderInterface;
 use App\Common\Http\Server;
 use App\Common\Config\ProviderImporter;
 use App\Common\Config\RoutesImporter;
-use Skolkovo22\Http\ClientMessage;
-use Skolkovo22\Http\Routing\RoutesCollectionInterface;
-use Skolkovo22\Http\Routing\RouteInterface;
-use Skolkovo22\Http\Routing\RouterInterface;
-use Skolkovo22\Http\Protocol\ClientMessageInterface;
-use Skolkovo22\Http\Protocol\ServerMessageInterface;
+use Sklkv22\Http\ClientMessage;
+use Sklkv22\Http\Router\CollectionInterface;
+use Sklkv22\Http\Router\RouteInterface;
+use Sklkv22\Http\Router\RouterInterface;
+use Sklkv22\Http\Protocol\ClientMessageInterface;
+use Sklkv22\Http\Protocol\ServerMessageInterface;
 use RuntimeException;
 use Throwable;
 
@@ -69,34 +69,35 @@ final class Cms
         }
         
         $this->core->getContainer()->newInstance($this->provider)->setup($this->core->getContainer());
-        
+
         (new ProviderImporter($this->project))->import($this->core->getContainer());
-        (new RoutesImporter($this->project))->import($this->core->getContainer()->get(RoutesCollectionInterface::class));
+        (new RoutesImporter($this->project))->import($this->core->getContainer()->get(CollectionInterface::class));
         
         $clientMessage = new ClientMessage();
         
         $route = $this->core->getContainer()->get(RouterInterface::class)->handleClientMessage($clientMessage);
+
+        foreach ($route->fetchSegments($clientMessage) as $id => $segment) {
+            $clientMessage->setSegment($id, $segment);
+        }
         
-        $controllerRules = new ControllerRules($route->getController());
+        $controllerRules = new ControllerRules($route->getHandler());
         $this->checkRules($controllerRules);
-        
-        $actionRules = new ActionRules($route->getController(), $route->getAction());
-        $this->checkRules($actionRules);
         
         $controllerArguments = (new ConstructorParser(
             $this->core->getContainer(),
             $clientMessage
-        ))->getArguments($route->getController());
+        ))->getArguments($route->getHandler());
         
-        $controllerClass = $route->getController();
+        $controllerClass = $route->getHandler();
         $controller = new $controllerClass(...$controllerArguments);
         
         $actionArguments = (new ActionParser(
             $this->core->getContainer(),
             $clientMessage
-        ))->getArguments($route->getController(), $route->getAction());
+        ))->getArguments($route->getHandler(), '__invoke');
         
-        $serverMessage = $controller->{$route->getAction()}(...$actionArguments);
+        $serverMessage = $controller(...$actionArguments);
         
         $serverMessage->addHeader(
             'X-App-Time',

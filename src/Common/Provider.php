@@ -8,10 +8,10 @@ use App\Common\DI\ContainerInterface;
 use App\Common\DI\ProviderInterface;
 use App\Common\Frontend\View\Theme\PhpTheme;
 use App\Common\Frontend\View\ThemeInterface;
-use Skolkovo22\Http\Router;
-use Skolkovo22\Http\RoutesCollection;
-use Skolkovo22\Http\Routing\RoutesCollectionInterface;
-use Skolkovo22\Http\Routing\RouterInterface;
+use Sklkv22\Http\Router\Router;
+use Sklkv22\Http\Router\Collection;
+use Sklkv22\Http\Router\CollectionInterface;
+use Sklkv22\Http\Router\RouterInterface;
 
 final class Provider implements ProviderInterface
 {
@@ -19,7 +19,7 @@ final class Provider implements ProviderInterface
     {
         $container->importArguments(__DIR__ . '/../../config/arguments.php');
         
-        $container->put(RoutesCollectionInterface::class, RoutesCollection::class);
+        $container->put(CollectionInterface::class, Collection::class);
         $container->put(RouterInterface::class, Router::class);
         $container->put(RulesCheckerInterface::class, RulesChecker::class);
         $container->put(ThemeInterface::class, PhpTheme::class);

@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use Skolkovo22\Http\Protocol\ClientMessageInterface;
-use Skolkovo22\Http\Protocol\ServerMessageInterface;
-use Skolkovo22\Http\ServerMessage;
+use Sklkv22\Http\Protocol\ClientMessageInterface;
+use Sklkv22\Http\Protocol\ServerMessageInterface;
+use Sklkv22\Http\ServerMessage;
 
-final class PageController
+final class ContactsController
 {
-    public function contacts(ClientMessageInterface $clientMessage): ServerMessageInterface
+    public function __invoke(ClientMessageInterface $clientMessage): ServerMessageInterface
     {
         return new ServerMessage(
             theme(

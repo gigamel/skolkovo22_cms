@@ -1,26 +1,34 @@
 <?php
 
-use Skolkovo22\Http\Route;
+use Sklkv22\Http\Router\Route;
 
 return [
-    'blog_list' => new Route(
+    new Route(
+        'blog_list',
         '/',
-        '\\App\\Controller\\BlogController',
-        'posts'
+        '\\App\\Controller\\Blog\\PostsController'
     ),
-    'blog_list_page' => new Route(
+    new Route(
+        'blog_list_page',
         '/blog/page/{page}',
-        '\\App\\Controller\\BlogController',
-        'posts'
+        '\\App\\Controller\\Blog\\PostsController',
+        [
+            'id' => '[1-9]{1}[0-9]+?',
+            'page' => '[1-9]+[0-9]?',
+        ]
     ),
-    'blog_post' => new Route(
+    new Route(
+        'blog_post',
         '/blog/post/{id}',
-        '\\App\\Controller\\BlogController',
-        'post'
+        '\\App\\Controller\\Blog\\PostController',
+        [
+            'id' => '[1-9]{1}[0-9]+?',
+            'page' => '[1-9]+[0-9]?',
+        ]
     ),
-    'contacts' => new Route(
+    new Route(
+        'contacts',
         '/contacts/',
-        '\\App\\Controller\\PageController',
-        'contacts'
+        '\\App\\Controller\\ContactsController'
     ),
 ];

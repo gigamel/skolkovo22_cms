@@ -2,8 +2,8 @@
 
 namespace App\Common\Http;
 
-use Skolkovo22\Http\Protocol\ServerMessageInterface;
-use Skolkovo22\Http\ServerInterface;
+use Sklkv22\Http\Protocol\ServerMessageInterface;
+use Sklkv22\Http\ServerInterface;
 
 final class Server implements ServerInterface
 {

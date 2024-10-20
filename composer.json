@@ -1,6 +1,6 @@
 {
-    "name": "skolkovo22/cms",
-    "description": "Skolkovo22 CMS",
+    "name": "Sklkv22/cms",
+    "description": "Sklkv22 CMS",
     "type": "project",
     "require": {
         "php": ">=8.3",

@@ -3,7 +3,7 @@
 namespace App\Common\Arguments;
 
 use App\Common\DI\ContainerInterface;
-use Skolkovo22\Http\Protocol\ClientMessageInterface;
+use Sklkv22\Http\Protocol\ClientMessageInterface;
 use Exception;
 use ReflectionClass;
 use ReflectionException;

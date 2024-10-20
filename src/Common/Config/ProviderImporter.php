@@ -13,7 +13,7 @@ final class ProviderImporter
     
     public function import(ContainerInterface $container): void
     {
-        $loader = new \Skolkovo22\Loader\PhpFileArrayImporter();
+        $loader = new PhpArrayImporter();
         
         foreach (
             $loader->importArrayFrom($this->project->getConfigDir() . '/modules.php')

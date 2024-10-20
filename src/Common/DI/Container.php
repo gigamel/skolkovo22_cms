@@ -2,9 +2,9 @@
 
 namespace App\Common\DI;
 
-use Skolkovo22\DI\Container as FrameworkContainer;
-use Skolkovo22\DI\ContainerInterface as FrameworkContainerInterface;
-use Skolkovo22\DI\Exception as FrameworkContainerException;
+use Sklkv22\DI\Container as FrameworkContainer;
+use Sklkv22\DI\ContainerInterface as FrameworkContainerInterface;
+use Sklkv22\DI\Exception as FrameworkContainerException;
 use Exception;
 
 final class Container implements ContainerInterface

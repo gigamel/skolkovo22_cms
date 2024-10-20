@@ -4,7 +4,7 @@ namespace App\Common\BusinessRules\ActionResult;
 
 use App\Common\BusinessRules\ActionResultRuleInterface;
 use App\Common\BusinessRules\Exception;
-use Skolkovo22\Http\Protocol\ServerMessageInterface;
+use Sklkv22\Http\Protocol\ServerMessageInterface;
 use ReflectionClass;
 
 final class ServerMessageRule implements ActionResultRuleInterface

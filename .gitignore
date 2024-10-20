@@ -1,6 +1,6 @@
 .idea
 .fleet
+.gigaide
 nbproject
 vendor
 composer.lock
-config/app.local.php

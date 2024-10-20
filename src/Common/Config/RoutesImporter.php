@@ -2,7 +2,7 @@
 
 namespace App\Common\Config;
 
-use Skolkovo22\Http\Routing\RoutesCollectionInterface;
+use Sklkv22\Http\Router\CollectionInterface;
 
 final class RoutesImporter
 {
@@ -10,15 +10,15 @@ final class RoutesImporter
     {
     }
     
-    public function import(RoutesCollectionInterface $collection): void
+    public function import(CollectionInterface $collection): void
     {
-        $loader = new \Skolkovo22\Loader\PhpFileArrayImporter();
+        $loader = new PhpArrayImporter();
         
         foreach (
             $loader->importArrayFrom($this->project->getConfigDir() . '/routes.php')
-            as $name => $route
+            as $route
         ) {
-            $collection->set($name, $route);
+            $collection->add($route);
         }
         
     }
