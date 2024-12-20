@@ -1,34 +1,37 @@
 <?php
 
-use Sklkv22\Http\Router\Route;
+declare(strict_types=1);
+
+use Gigamel\Http\Route;
 
 return [
     new Route(
-        'blog_list',
+        'admin_dashboard',
+        '/admin/',
+        App\Controller\Admin\DashboardController::class,
+    ),
+    new Route(
+        'admin_complexes_list',
+        '/admin/complexes/(page/{page})?',
+        App\Controller\Admin\Complexe\ListController::class,
+        [
+            'page' => '[1-9]{1}[0-9]?',
+        ]
+    ),
+    new Route(
+        'admin_complexes_edit',
+        '/admin/complex/edit/{id}',
+        App\Controller\Admin\Complexe\EditController::class,
+        [
+            'id' => '[1-9]{1}[0-9]?',
+        ]
+    ),
+    new Route(
+        'page',
         '/',
-        '\\App\\Controller\\Blog\\PostsController'
-    ),
-    new Route(
-        'blog_list_page',
-        '/blog/page/{page}',
-        '\\App\\Controller\\Blog\\PostsController',
+        App\Controller\PageController::class,
         [
-            'id' => '[1-9]{1}[0-9]+?',
-            'page' => '[1-9]+[0-9]?',
+            'segments' => '.*',
         ]
-    ),
-    new Route(
-        'blog_post',
-        '/blog/post/{id}',
-        '\\App\\Controller\\Blog\\PostController',
-        [
-            'id' => '[1-9]{1}[0-9]+?',
-            'page' => '[1-9]+[0-9]?',
-        ]
-    ),
-    new Route(
-        'contacts',
-        '/contacts/',
-        '\\App\\Controller\\ContactsController'
     ),
 ];

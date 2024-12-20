@@ -1,11 +1,12 @@
 <?php
 
-use App\Common\Frontend\View\ThemeInterface;
+declare(strict_types=1);
 
 return [
-    ThemeInterface::class => [
-        'source' => __DIR__ . '/../theme/default',
-        'name' => 'theme.php',
-        'viewSource' => __DIR__ . '/../view',
+    Gigamel\Frontend\View\RenderCompositeInterface::class => [
+        'source' => __DIR__ . '/../view',
+    ],
+    App\Base\Storage\ConnectionInterface::class => [
+        'databasePath' => 'sqlite:' . __DIR__ . '/../var/data/sqlite/app.sqlite',
     ],
 ];

@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Cms;
-use App\Common\Config\Project;
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-require_once __DIR__ . '/../vendor/autoload.php';
+use App\Estates;
 
-(new Cms(new Project(dirname(__DIR__))))->run();
+(new Estates(dirname(__DIR__)))->run();
